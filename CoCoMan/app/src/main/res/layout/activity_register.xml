@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.RegisterActivity"
+    android:orientation="vertical"
+    android:padding="10dp">
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/dummy_profile"/>
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="아이디"
+        android:textSize="15dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        >
+        <EditText
+            android:id="@+id/id_register"
+            android:layout_width="1dp"
+            android:layout_height="50dp"
+            android:layout_weight="8"
+            android:background="@color/gray"
+            android:hint="아이디를 입력해주세요"/>
+        <Button
+            android:layout_marginLeft="3dp"
+            android:layout_width="1dp"
+            android:layout_height="50dp"
+            android:layout_weight="2"
+            android:text="중복확인"
+            android:textSize="15dp"
+            android:background="@color/gray"/>
+    </LinearLayout>
+    <TextView
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="비밀번호"
+        android:textSize="15dp"/>
+    <EditText
+        android:id="@+id/password_register"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/gray"
+        android:hint="비밀번호를 입력해주세요"
+        android:inputType="textPassword"/>
+    <TextView
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="비밀번호 확인"
+        android:textSize="15dp"/>
+    <EditText
+        android:id="@+id/passwordCheck_register"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/gray"
+        android:inputType="textPassword"
+        android:hint="비밀번호를 다시 한번 입력해주세요"/>
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="성별"
+        android:textSize="15dp"/>
+    <RadioGroup
+        android:id="@+id/gender_all"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="3"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/gender_female"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:text="여성"
+            android:textColor="#000000"
+            android:textSize="15dp" />
+
+        <RadioButton
+            android:id="@+id/gender_male"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:text="남성"
+            android:textColor="#000000"
+            android:textSize="15dp" />
+
+        <RadioButton
+            android:id="@+id/gender_etc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:text="기타"
+            android:textColor="#000000"
+            android:textSize="15dp" />
+    </RadioGroup>
+    <Button
+        android:id="@+id/make_account"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="계정 만들기"
+        android:textSize="20dp"
+        android:layout_gravity="center_horizontal"/>
+
+</LinearLayout>

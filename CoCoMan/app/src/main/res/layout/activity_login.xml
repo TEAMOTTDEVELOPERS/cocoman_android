@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.LoginActivity"
+    android:padding="10dp"
+    android:orientation="vertical">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="230dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="아이디"/>
+    <EditText
+        android:id="@+id/insert_id"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="아이디를 입력해 주세요."
+        android:background="@color/gray"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+
+        android:textSize="20dp"
+        android:text="비밀번호"/>
+    <EditText
+        android:id="@+id/insert_pw"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="비밀번호 입력해 주세요."
+        android:background="@color/gray"
+        android:inputType="textPassword"/>
+    <Button
+        android:id="@+id/lost_pw"
+        android:layout_width="wrap_content"
+        android:layout_height="15dp"
+        android:layout_gravity="right"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="25dp"
+        android:background="#00ff0000"
+        android:text="비밀번호를 잊으셨나요?"
+        android:textColor="#7f6000"
+        android:textSize="12dp" />
+
+    <Button
+        android:id="@+id/lost_id"
+        android:layout_width="wrap_content"
+        android:layout_height="15dp"
+        android:layout_gravity="right"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="25dp"
+        android:background="#00ff0000"
+        android:text="아이디를 잊으셨나요?"
+        android:textColor="#7f6000"
+        android:textSize="12dp" />
+    </LinearLayout>
+    <Button
+        android:id="@+id/login_btn"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="로그인"
+        android:layout_gravity="center_horizontal"/>
+    <Button
+        android:id="@+id/register_btn"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="회원가입"
+        android:layout_gravity="center_horizontal"/>
+</LinearLayout>

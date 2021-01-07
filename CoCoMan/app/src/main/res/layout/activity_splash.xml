@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.SplashActivity">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_gravity="center_vertical"
+    android:gravity="center_horizontal">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tap"
+        android:textSize="40dp"
+        android:layout_gravity="center_vertical"
+        />
+    <ImageView
+        android:id="@+id/tap_icon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/dummy_coconut"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="to Start"
+        android:textSize="40dp"
+        android:layout_gravity="center_vertical"
+        />
+
+</LinearLayout>
+
+
+</LinearLayout>
