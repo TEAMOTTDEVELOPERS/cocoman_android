@@ -32,12 +32,12 @@ class LoginActivity : AppCompatActivity() {
 
     fun setupListener(){
         // 로그인 버튼 누른 경우
-        login_btn.setOnClickListener {
-            val intent = Intent(this,MainActivity::class.java)
+        loginBtn.setOnClickListener {
+            val intent = Intent(this,InitialRatingAcitivity::class.java)
             tryLogin(intent)
         }
         // 회원가입 버튼 누른 경우
-        register_btn.setOnClickListener {
+        registerBtn.setOnClickListener {
             val intent = Intent(this,RegisterActivity::class.java)
             startActivity(intent)
             finish()

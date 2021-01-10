@@ -8,6 +8,7 @@
     android:orientation="vertical"
     android:padding="10dp">
     <ImageView
+        android:layout_marginTop="30dp"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
@@ -72,6 +73,19 @@
         android:layout_marginTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="나이"
+        android:textSize="15dp"/>
+    <EditText
+        android:id="@+id/age_register"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/gray"
+        android:inputType="textPassword"
+        android:hint="나이를 입력해주세요"/>
+    <TextView
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="성별"
         android:textSize="15dp"/>
     <RadioGroup
@@ -111,6 +125,85 @@
             android:textColor="#000000"
             android:textSize="15dp" />
     </RadioGroup>
+    <TextView
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="사용중인 OTT"
+        android:textSize="15dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="4">
+            <CheckBox
+                android:id="@+id/netflix"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Netflix"
+                android:onClick="onCheckboxClicked"/>
+            <CheckBox
+                android:id="@+id/watcha"
+                android:layout_width="1dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Watcha"
+                android:onClick="onCheckboxClicked"/>
+            <CheckBox
+                android:id="@+id/kakaoTv"
+                android:layout_width="1dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Kakao TV"
+                android:onClick="onCheckboxClicked"/>
+            <CheckBox
+                android:id="@+id/tving"
+                android:layout_width="1dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Tving"
+                android:onClick="onCheckboxClicked"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="4">
+            <CheckBox
+                android:id="@+id/wavve"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Wavve"
+                android:onClick="onCheckboxClicked"/>
+            <CheckBox
+                android:id="@+id/naver"
+                android:layout_width="1dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Naver S."
+                android:onClick="onCheckboxClicked"/>
+            <CheckBox
+                android:id="@+id/seezen"
+                android:layout_width="1dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Seezen"
+                android:onClick="onCheckboxClicked"/>
+            <CheckBox
+                android:id="@+id/coupangPlay"
+                android:layout_width="1dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Coupang"
+                android:onClick="onCheckboxClicked"/>
+        </LinearLayout>
+    </LinearLayout>
     <Button
         android:id="@+id/make_account"
         android:layout_marginTop="20dp"
