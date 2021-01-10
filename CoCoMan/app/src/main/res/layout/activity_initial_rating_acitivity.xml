@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.InitialRatingAcitivity"
+    tools:context=".activity.InitialRatingActivity"
     android:orientation="vertical"
     android:background="#131313"
-    android:padding="10dp">
+    android:padding="5dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="130dp"
@@ -15,7 +15,7 @@
         android:padding="10dp"
         android:background="#000000">
         <LinearLayout
-            android:layout_width="332dp"
+            android:layout_width="335dp"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
@@ -47,6 +47,7 @@
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/content_recylerview"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"/>

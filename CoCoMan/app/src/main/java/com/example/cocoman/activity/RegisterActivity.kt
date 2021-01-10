@@ -22,6 +22,7 @@ class RegisterActivity : AppCompatActivity() {
     lateinit var userGender: RadioButton
     lateinit var userAge:EditText
     lateinit var createAccountBtn : Button
+    lateinit var checkDuplicate : Button
     var ottContents=ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +36,9 @@ class RegisterActivity : AppCompatActivity() {
         createAccountBtn.setOnClickListener {
             register()
         }
+        checkDuplicate.setOnClickListener {
+            checkDup()
+        }
     }
 
     fun initView(activity: Activity){
@@ -43,6 +47,7 @@ class RegisterActivity : AppCompatActivity() {
         userPasswordCheckView = activity.findViewById(R.id.passwordCheck_register)
         userAge = activity.findViewById(R.id.age_register)
         createAccountBtn = activity.findViewById(R.id.make_account)
+        checkDuplicate = activity.findViewById(R.id.checkDuplicate_register)
     }
 
     fun getUsername():String{
@@ -76,6 +81,9 @@ class RegisterActivity : AppCompatActivity() {
         finish()
     }
 
+    fun checkDup(){
+        // 아이디 중복체크
+    }
     fun onCheckboxClicked(view: View) {
         if(view is CheckBox){
             val checked : Boolean = view.isChecked

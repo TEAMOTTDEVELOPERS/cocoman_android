@@ -11,7 +11,6 @@ import android.widget.Toast
 import com.example.cocoman.R
 import com.example.cocoman.data.LoginToken
 import com.example.cocoman.network.MasterApplication
-import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -33,7 +32,7 @@ class LoginActivity : AppCompatActivity() {
     fun setupListener(){
         // 로그인 버튼 누른 경우
         loginBtn.setOnClickListener {
-            val intent = Intent(this,InitialRatingAcitivity::class.java)
+            val intent = Intent(this,InitialRatingActivity::class.java)
             tryLogin(intent)
         }
         // 회원가입 버튼 누른 경우

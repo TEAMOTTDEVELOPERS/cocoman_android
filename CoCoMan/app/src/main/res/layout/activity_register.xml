@@ -34,6 +34,7 @@
             android:background="@color/gray"
             android:hint="아이디를 입력해주세요"/>
         <Button
+            android:id="@+id/checkDuplicate_register"
             android:layout_marginLeft="3dp"
             android:layout_width="1dp"
             android:layout_height="50dp"

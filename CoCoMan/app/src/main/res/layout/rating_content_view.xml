@@ -31,6 +31,7 @@
                 android:textColor="#ffffff"
                 android:textStyle="bold"/>
             <TextView
+                android:id="@+id/content_year"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2020"
