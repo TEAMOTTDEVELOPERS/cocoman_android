@@ -2,8 +2,10 @@ package com.example.cocoman.network
 
 import android.app.Application
 import android.content.Context
+import com.example.cocoman.adapter.KakaoSDKAdapter
 import com.facebook.stetho.Stetho
 import com.facebook.stetho.okhttp3.StethoInterceptor
+import com.kakao.auth.KakaoSDK
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -19,7 +21,24 @@ class MasterApplication : Application(){
         super.onCreate()
         Stetho.initializeWithDefaults(this)
         createRetrofit()
+
+        instance = this
+        KakaoSDK.init(KakaoSDKAdapter())
     }
+    override fun onTerminate() {
+        super.onTerminate()
+        instance = null
+    }
+
+    fun getGlobalApplicationContext(): MasterApplication {
+        checkNotNull(instance) { "this application does not inherit com.kakao.GlobalApplication" }
+        return instance!!
+    }
+
+    companion object {
+        var instance: MasterApplication? = null
+    }
+
 
     fun createRetrofit(){
         //통신 나갈떄 가로채서 개조! -- header 달아줌
@@ -30,7 +49,7 @@ class MasterApplication : Application(){
                 // 토큰 가져 오는데, 토큰이 null이 아닌 경우 이 부분 수행
                 getUserToken()?.let {token ->
                     val request = original.newBuilder()
-                        .header("Autorization","token "+token)
+                        .header("Authorization","token "+token)
                         .build()
                     it.proceed(request)
                 }

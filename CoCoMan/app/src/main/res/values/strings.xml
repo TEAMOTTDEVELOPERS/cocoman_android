@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CoCoMan</string>
+    <string name ="kakao_app_key">e2aede34f771b87b113aabd6b0f9dd3c</string>
 </resources>
