@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cocoman.R
+import com.example.cocoman.`interface`.onContentRatingStatusChangeListener
 import com.example.cocoman.activity.InitialRatingActivity
 import com.example.cocoman.data.ContentRating
 import com.example.cocoman.network.MasterApplication
@@ -20,7 +21,8 @@ import kotlinx.android.synthetic.main.rating_content_view.view.*
 
 class ContentRatingAdaptor (
     val contentList: ArrayList<ContentRating>,
-    val inflater: LayoutInflater
+    val inflater: LayoutInflater,
+    val onContentRatingStatusChangeListener: onContentRatingStatusChangeListener
 
 ):RecyclerView.Adapter<ContentRatingAdaptor.ViewHolder>(){
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
@@ -53,9 +55,16 @@ class ContentRatingAdaptor (
         holder.contentScore.rating=contentList.get(position).score
         holder.contentScore.setOnRatingBarChangeListener(object : RatingBar.OnRatingBarChangeListener{
             override fun onRatingChanged(p0: RatingBar?, p1: Float, p2: Boolean) {
-                contentList[position].score = p1
+                if(contentList[position].score == 0.0F && p1 !=0.0F && p2==true){
+                    onContentRatingStatusChangeListener.onContentRated(position,p1)
+                }
+                else if(contentList[position].score != 0.0F && p1==0.0F&& p2==true){
+                    onContentRatingStatusChangeListener.onContentUnrated(position,p1)
+                }
+                if(p2==true) {
+                    contentList[position].score = p1
+                }
                 Log.d("rate",""+position+":"+contentList[position].score)
-
             }
         })
 //        Glide.with(activity)
