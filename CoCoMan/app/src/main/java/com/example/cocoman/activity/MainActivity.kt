@@ -11,21 +11,17 @@ import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+    var userId: Int=1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        nav_bar.addTab(nav_bar.newTab().setText("홈"))
-//        nav_bar.addTab(nav_bar.newTab().setText("검색"))
-//        nav_bar.addTab(nav_bar.newTab().setText("추천"))
-//        nav_bar.addTab(nav_bar.newTab().setText("그룹"))
-//        nav_bar.addTab(nav_bar.newTab().setText("프로필"))
         makeBottomNavigation()
         fragment_page.setCurrentItem(0)
 
     }
     private fun makeBottomNavigation(){
-        val pagerAdapter = NavigationTabAdapter(supportFragmentManager,5)
+        val pagerAdapter = NavigationTabAdapter(supportFragmentManager,5,userId)
         fragment_page.adapter = pagerAdapter
         nav_bar.setupWithViewPager(fragment_page)
 

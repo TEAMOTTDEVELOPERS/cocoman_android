@@ -8,6 +8,22 @@ import androidx.fragment.app.Fragment
 import com.example.cocoman.R
 
 class SearchFragment : Fragment(){
+    var userId: Int? = 1
+
+    companion object {
+
+        private const val USERID = "userId"
+
+        fun newInstance(userId: Int): SearchFragment {
+            var bundle = Bundle()
+            bundle.putInt(USERID, userId)
+            var fragment = SearchFragment()
+            fragment.arguments = bundle
+
+            return fragment
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -15,4 +31,13 @@ class SearchFragment : Fragment(){
     ): View? {
         return inflater.inflate(R.layout.fragment_search, container, false)
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        userId = arguments?.getInt(SearchFragment.USERID) ?: 0
+
+    }
+
+
 }
