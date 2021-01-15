@@ -58,6 +58,7 @@ class InitialRatingActivity : AppCompatActivity() {
     fun setupListener(){
         doneBtn.setOnClickListener {
             if(shouldBeRated<=0) {
+                // TODO: 사용자가 이미 초기 콘텐츠 평가 했다고 서버에 알려주기
                 val intent = Intent(this@InitialRatingActivity, MainActivity::class.java)
                 startActivity(intent)
                 finish()

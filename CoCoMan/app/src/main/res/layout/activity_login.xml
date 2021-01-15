@@ -45,13 +45,26 @@
         android:layout_gravity="right"
         android:layout_marginTop="10dp"
         android:orientation="horizontal">
-        <ImageButton
-            android:id="@+id/login_facebook"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:scaleType="fitCenter"
-            android:background="#ffffff"
-            android:src="@drawable/facebook"/>
+
+        <FrameLayout
+            android:id="@+id/FrameLayout1"
+            android:layout_width="43dp"
+            android:layout_height="wrap_content">
+
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/login_button_facebook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+            <ImageButton
+                android:id="@+id/login_facebook"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="#ffffff"
+                android:scaleType="fitCenter"
+                android:src="@drawable/facebook" />
+        </FrameLayout>
 
         <ImageButton
             android:id="@+id/login_google"
@@ -61,7 +74,7 @@
             android:scaleType="fitCenter"
             android:background="#ffffff"
             android:src="@drawable/google"/>
-        <com.kakao.usermgmt.LoginButton
+        <ImageButton
             android:id="@+id/login_kakao"
             android:layout_marginLeft="5dp"
             android:layout_width="50dp"

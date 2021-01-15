@@ -9,86 +9,47 @@ import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
-import android.widget.RadioButton
+import android.widget.TextView
 import com.example.cocoman.R
-import com.example.cocoman.data.Register
-import kotlinx.android.synthetic.main.activity_register.*
 
-class RegisterActivity : AppCompatActivity() {
-
-    lateinit var usernameView: EditText
-    lateinit var userPasswordView: EditText
-    lateinit var userPasswordCheckView:EditText
-    lateinit var userAge:EditText
+class RegisterForSocialLoginActivity : AppCompatActivity() {
+    lateinit var userAge: EditText
     lateinit var createAccountBtn : Button
-    lateinit var checkDuplicate : Button
+    lateinit var username:TextView
     var ottContents=ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        var name = getIntent().getStringExtra("username")
+        var token_ = getIntent().getStringExtra("token")
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register)
-        initView(this@RegisterActivity)
-        setupListener()
-
-    }
-    fun setupListener(){
+        setContentView(R.layout.activity_register_for_social_login)
+        initView(this@RegisterForSocialLoginActivity)
+        username.setText(name).toString()
         createAccountBtn.setOnClickListener {
             register()
-        }
-        checkDuplicate.setOnClickListener {
-            checkDup()
         }
     }
 
     fun initView(activity: Activity){
-        usernameView = activity.findViewById(R.id.id_register)
-        userPasswordView = activity.findViewById(R.id.password_register)
-        userPasswordCheckView = activity.findViewById(R.id.passwordCheck_register)
-        userAge = activity.findViewById(R.id.age_register)
-        createAccountBtn = activity.findViewById(R.id.make_account)
-        checkDuplicate = activity.findViewById(R.id.checkDuplicate_register)
+        username=activity.findViewById(R.id.username_sl)
+        userAge = activity.findViewById(R.id.age_register_sl)
+        createAccountBtn = activity.findViewById(R.id.make_account_sl)
     }
 
-    fun getUsername():String{
-        return usernameView.text.toString()
-    }
-    fun getUserPassword():String{
-        return userPasswordView.text.toString()
-    }
-    fun getUserPasswordCheck():String{
-        return userPasswordCheckView.text.toString()
-    }
-    fun getUserAge():Int{
-        return userAge.text.toString().toInt()
-    }
-    fun getUserGender():String{
-        if(gender_female.isChecked){
-            return "Female"
-        }
-        else if(gender_male.isChecked){
-            return "Male"
-        }
-        else{
-            return "Etc"
-        }
-    }
 
     fun register(){
-        // TODO: 서버랑 연결
-        //register(getUsername(),getUserPassword(),getUserPasswordCheck(),getUserGender(),getUserAge(),ottContents)
-        val intent = Intent(this, LoginActivity::class.java)
+        // TODO: register 서버랑 연결
+        //register(user,token_,getUserGender(),getUserAge(),ottContents)
+        val intent = Intent(this, InitialRatingActivity::class.java)
         startActivity(intent)
         finish()
     }
 
-    fun checkDup(){
-        // TODO:아이디 중복체크
-    }
     fun onCheckboxClicked(view: View) {
         if(view is CheckBox){
             val checked : Boolean = view.isChecked
             when(view.id){
-                R.id.netflix -> {
+                R.id.netflix_sl -> {
                     if(checked){
                         ottContents.add("Netflix")
                         Log.d("contents",""+ottContents)
@@ -98,7 +59,7 @@ class RegisterActivity : AppCompatActivity() {
                         Log.d("contents",""+ottContents)
                     }
                 }
-                R.id.watcha -> {
+                R.id.watcha_sl -> {
                     if(checked){
                         ottContents.add("Watcha")
                         Log.d("contents",""+ottContents)
@@ -108,7 +69,7 @@ class RegisterActivity : AppCompatActivity() {
                         Log.d("contents",""+ottContents)
                     }
                 }
-                R.id.tving -> {
+                R.id.tving_sl -> {
                     if(checked){
                         ottContents.add("Tving")
                         Log.d("contents",""+ottContents)
@@ -118,7 +79,7 @@ class RegisterActivity : AppCompatActivity() {
                         Log.d("contents",""+ottContents)
                     }
                 }
-                R.id.naver -> {
+                R.id.naver_sl -> {
                     if(checked){
                         ottContents.add("Naver")
                         Log.d("contents",""+ottContents)
@@ -128,7 +89,7 @@ class RegisterActivity : AppCompatActivity() {
                         Log.d("contents",""+ottContents)
                     }
                 }
-                R.id.kakaoTv -> {
+                R.id.kakaoTv_sl -> {
                     if(checked){
                         ottContents.add("Kakao Tv")
                         Log.d("contents",""+ottContents)
@@ -138,7 +99,7 @@ class RegisterActivity : AppCompatActivity() {
                         Log.d("contents",""+ottContents)
                     }
                 }
-                R.id.wavve -> {
+                R.id.wavve_sl -> {
                     if(checked){
                         ottContents.add("Wavve")
                         Log.d("contents",""+ottContents)
@@ -148,7 +109,7 @@ class RegisterActivity : AppCompatActivity() {
                         Log.d("contents",""+ottContents)
                     }
                 }
-                R.id.seezen -> {
+                R.id.seezen_sl -> {
                     if(checked){
                         ottContents.add("Seezen")
                         Log.d("contents",""+ottContents)
@@ -158,7 +119,7 @@ class RegisterActivity : AppCompatActivity() {
                         Log.d("contents",""+ottContents)
                     }
                 }
-                R.id.coupangPlay -> {
+                R.id.coupangPlay_sl -> {
                     if(checked){
                         ottContents.add("Coupang Play")
                         Log.d("contents",""+ottContents)
@@ -171,4 +132,5 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
     }
+
 }

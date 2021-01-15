@@ -7,6 +7,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.1"
 
@@ -16,7 +19,6 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -53,6 +55,10 @@ dependencies {
 
     implementation 'com.google.android.material:material:1.0.0'
 
-    implementation 'com.kakao.sdk:usermgmt:1.16.0'
+    implementation "com.kakao.sdk:v2-user:2.0.1"
+
+    implementation group: project.KAKAO_SDK_GROUP, name: 'usermgmt', version: project.KAKAO_SDK_VERSION
+    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+
 
 }
