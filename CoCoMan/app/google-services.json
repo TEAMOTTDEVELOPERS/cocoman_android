@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1017345274453",
+    "project_id": "cocoman-ef746",
+    "storage_bucket": "cocoman-ef746.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1017345274453:android:eb490845af6c99fc5e5adc",
+        "android_client_info": {
+          "package_name": "com.example.cocoman"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1017345274453-3t7rgojaru6f6gsidrh346hca48klf2c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPUBj2mUO3DUQGG8nO4hrvF_o_DUcB5QA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1017345274453-3t7rgojaru6f6gsidrh346hca48klf2c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

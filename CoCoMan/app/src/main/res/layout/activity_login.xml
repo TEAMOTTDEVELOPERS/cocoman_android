@@ -48,8 +48,8 @@
 
         <FrameLayout
             android:id="@+id/FrameLayout1"
-            android:layout_width="43dp"
-            android:layout_height="wrap_content">
+            android:layout_width="50dp"
+            android:layout_height="50dp">
 
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/login_button_facebook"
@@ -66,14 +66,14 @@
                 android:src="@drawable/facebook" />
         </FrameLayout>
 
-        <ImageButton
-            android:id="@+id/login_google"
-            android:layout_marginLeft="5dp"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:scaleType="fitCenter"
-            android:background="#ffffff"
-            android:src="@drawable/google"/>
+            <ImageButton
+                android:id="@+id/login_google"
+                android:layout_marginLeft="5dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="fitCenter"
+                android:background="#ffffff"
+                android:src="@drawable/google" />
         <ImageButton
             android:id="@+id/login_kakao"
             android:layout_marginLeft="5dp"

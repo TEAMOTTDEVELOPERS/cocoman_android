@@ -32,10 +32,21 @@ import com.kakao.sdk.user.UserApiClient
 import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.SignInButton
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import org.json.JSONException
 import org.json.JSONObject
 
 class LoginActivity : AppCompatActivity() {
+
+
     lateinit var userId :EditText
     lateinit var userPw: EditText
     lateinit var loginBtn: Button
@@ -47,6 +58,11 @@ class LoginActivity : AppCompatActivity() {
     lateinit var naverBtn :ImageButton
     lateinit var callbackManager:CallbackManager
 
+    val RC_SIGN_IN: Int = 1
+    lateinit var mGoogleSignInClient: GoogleSignInClient
+    lateinit var mGoogleSignInOptions: GoogleSignInOptions
+    private lateinit var firebaseAuth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -55,8 +71,10 @@ class LoginActivity : AppCompatActivity() {
         val keyHash = Utility.getKeyHash(this)
         Log.d("Hash", keyHash)
         facebookInit()
+        firebaseAuth = FirebaseAuth.getInstance()
 
     }
+
 
     fun setupListener(){
         // 로그인 버튼 누른 경우
@@ -83,7 +101,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         googleBtn.setOnClickListener{
-
+                googleSignIn()
         }
         kakaoBtn.setOnClickListener{
             tryKakaoLogin()
@@ -94,6 +112,24 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    private fun googleSignIn() {
+        val signInIntent: Intent = mGoogleSignInClient.signInIntent
+        startActivityForResult(signInIntent, RC_SIGN_IN)
+    }
+
+    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount,data:String) {
+        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
+        firebaseAuth.signInWithCredential(credential).addOnCompleteListener {
+            if (it.isSuccessful) {
+                Log.d("msg","email:"+ it.result?.user?.email.toString())
+                Log.d("msg", "token :" + data)
+                checkIsRegisteredSocialLogin(it.result?.user?.email.toString(),data)
+
+            } else {
+                Toast.makeText(this, "Google sign in failed:(", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
     fun initView(activity: Activity){
         userId = activity.findViewById(R.id.insert_id)
         userPw = activity.findViewById(R.id.insert_pw)
@@ -104,6 +140,14 @@ class LoginActivity : AppCompatActivity() {
         googleBtn = activity.findViewById(R.id.login_google)
         kakaoBtn = activity.findViewById(R.id.login_kakao)
         naverBtn = activity.findViewById(R.id.login_naver)
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+
     }
 
     private fun tryLogin(intent: Intent){
@@ -280,6 +324,16 @@ class LoginActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         callbackManager.onActivityResult(requestCode,resultCode,data)
         super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RC_SIGN_IN) {
+            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                val account = task.getResult(ApiException::class.java)
+                account?.idToken?.let { firebaseAuthWithGoogle(account!!, it) }
+            } catch (e: ApiException) {
+                Toast.makeText(this, "Google sign in failed:(", Toast.LENGTH_LONG).show()
+                Log.d("msg",""+e.toString())
+            }
+        }
     }
 
     // 페북 로그인 되어있는지 확인
