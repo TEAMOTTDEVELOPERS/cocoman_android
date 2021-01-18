@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     }
     private fun makeBottomNavigation(){
-        val pagerAdapter = NavigationTabAdapter(supportFragmentManager,5,userId)
+        val pagerAdapter = NavigationTabAdapter(supportFragmentManager,5)
         fragment_page.adapter = pagerAdapter
         nav_bar.setupWithViewPager(fragment_page)
 

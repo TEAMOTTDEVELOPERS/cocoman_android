@@ -45,10 +45,17 @@
             android:layout_marginBottom="60dp"
             />
     </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/content_recylerview"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
         android:orientation="vertical"/>
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/progress_bar_initialRating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
 </LinearLayout>

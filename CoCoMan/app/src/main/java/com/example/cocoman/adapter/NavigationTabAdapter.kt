@@ -6,18 +6,18 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import com.example.cocoman.fragment.*
 
 
-class NavigationTabAdapter (fm:FragmentManager,val fragmentCount:Int, val userId: Int): FragmentStatePagerAdapter(fm){
+class NavigationTabAdapter (fm:FragmentManager,val fragmentCount:Int): FragmentStatePagerAdapter(fm){
     override fun getCount(): Int {
         return fragmentCount
     }
 
     override fun getItem(position: Int): Fragment {
         when(position){
-            0 -> return HomeFragment.newInstance(userId)
-            1 -> return SearchFragment.newInstance(userId)
-            2 -> return OTTRecommendFragment.newInstance(userId)
-            3 -> return GroupFragment.newInstance(userId)
-            else -> return MyProfileFragment.newInstance(userId)
+            0 -> return HomeFragment()
+            1 -> return SearchFragment()
+            2 -> return OTTRecommendFragment()
+            3 -> return GroupFragment()
+            else -> return MyProfileFragment()
         }
     }
 }

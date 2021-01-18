@@ -21,6 +21,8 @@ class InitialRatingActivity : AppCompatActivity() {
     var rateCompleted:Int = 0
     var shouldBeRated : Int = 10-rateCompleted
     var contentList = ArrayList<ContentRating>()
+    var page = 1
+    var limit = 10
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // 맨 처음 뷰 만들때
@@ -36,11 +38,14 @@ class InitialRatingActivity : AppCompatActivity() {
     }
 
     fun getData(){
-        // TODO: 서버로부터 데이터 가져오기
+        // TODO: 서버로부터 데이터 가져오기 -- pagination은 서버가 완료되야 테스트 해보면서 할수 있을거같아요!
         for (i in 0 until 10) {
             contentList.add(ContentRating("Harry Potter 2", 2012, 0.0F))
         }
     }
+
+
+
     fun layoutInit(){
         val adapter = ContentRatingAdaptor(contentList, LayoutInflater.from(this@InitialRatingActivity),object : onContentRatingStatusChangeListener{
             override fun onContentRated(position: Int,p1:Float) {
