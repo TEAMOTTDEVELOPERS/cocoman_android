@@ -3,32 +3,17 @@ package com.example.cocoman.activity
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Base64
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.example.cocoman.R
 import com.example.cocoman.data.LoginToken
 import com.example.cocoman.network.MasterApplication
 import com.facebook.*
-
-import com.kakao.sdk.auth.LoginClient
-import com.kakao.sdk.auth.model.OAuthToken
-
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.security.MessageDigest
-import com.kakao.sdk.common.util.Utility
-import com.kakao.sdk.common.model.AuthErrorCause.*
-import com.kakao.sdk.user.UserApiClient
 import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
@@ -36,13 +21,27 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.kakao.sdk.auth.LoginClient
+import com.kakao.sdk.auth.model.OAuthToken
+import com.kakao.sdk.common.model.AuthErrorCause.*
+import com.kakao.sdk.common.util.Utility
+import com.kakao.sdk.user.UserApiClient
+import com.nhn.android.naverlogin.OAuthLogin
+import com.nhn.android.naverlogin.OAuthLoginHandler
+import com.nhn.android.naverlogin.ui.view.OAuthLoginButton
 import org.json.JSONException
 import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.URL
 
 class LoginActivity : AppCompatActivity() {
 
@@ -55,24 +54,28 @@ class LoginActivity : AppCompatActivity() {
     lateinit var fbBtn:ImageButton
     lateinit var googleBtn :ImageButton
     lateinit var kakaoBtn :ImageButton
-    lateinit var naverBtn :ImageButton
+    lateinit var naverBtn :OAuthLoginButton
     lateinit var callbackManager:CallbackManager
-
+    lateinit var mContext: Context
     val RC_SIGN_IN: Int = 1
     lateinit var mGoogleSignInClient: GoogleSignInClient
     lateinit var mGoogleSignInOptions: GoogleSignInOptions
     private lateinit var firebaseAuth: FirebaseAuth
+    lateinit var mOAuthLoginModule : OAuthLogin
+    lateinit var  mOAuthLoginHandler: OAuthLoginHandler
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        initNaverHandler()
         initView(this@LoginActivity)
         setupListener()
         val keyHash = Utility.getKeyHash(this)
         Log.d("Hash", keyHash)
         facebookInit()
         firebaseAuth = FirebaseAuth.getInstance()
-
+        initNaver()
     }
 
 
@@ -101,35 +104,17 @@ class LoginActivity : AppCompatActivity() {
         }
 
         googleBtn.setOnClickListener{
-                googleSignIn()
+            googleSignIn()
         }
         kakaoBtn.setOnClickListener{
             tryKakaoLogin()
 
         }
-        naverBtn.setOnClickListener{
-
-        }
+//        naverBtn.setOnClickListener{
+//            naverLogin()
+//        }
     }
 
-    private fun googleSignIn() {
-        val signInIntent: Intent = mGoogleSignInClient.signInIntent
-        startActivityForResult(signInIntent, RC_SIGN_IN)
-    }
-
-    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount,data:String) {
-        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
-        firebaseAuth.signInWithCredential(credential).addOnCompleteListener {
-            if (it.isSuccessful) {
-                Log.d("msg","email:"+ it.result?.user?.email.toString())
-                Log.d("msg", "token :" + data)
-                checkIsRegisteredSocialLogin(it.result?.user?.email.toString(),data)
-
-            } else {
-                Toast.makeText(this, "Google sign in failed:(", Toast.LENGTH_LONG).show()
-            }
-        }
-    }
     fun initView(activity: Activity){
         userId = activity.findViewById(R.id.insert_id)
         userPw = activity.findViewById(R.id.insert_pw)
@@ -141,6 +126,7 @@ class LoginActivity : AppCompatActivity() {
         kakaoBtn = activity.findViewById(R.id.login_kakao)
         naverBtn = activity.findViewById(R.id.login_naver)
 
+        naverBtn.setOAuthLoginHandler(mOAuthLoginHandler)
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
@@ -150,6 +136,7 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
+    // 일반 로그인
     private fun tryLogin(intent: Intent){
         val userId = userId.text.toString()
         val userPw = userPw.text.toString()
@@ -253,6 +240,62 @@ class LoginActivity : AppCompatActivity() {
                 TODO("Not yet implemented")
             }
         })
+    }
+
+    private fun googleSignIn() {
+        val signInIntent: Intent = mGoogleSignInClient.signInIntent
+        startActivityForResult(signInIntent, RC_SIGN_IN)
+    }
+
+    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount,data:String) {
+        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
+        firebaseAuth.signInWithCredential(credential).addOnCompleteListener {
+            if (it.isSuccessful) {
+                Log.d("msg","email:"+ it.result?.user?.email.toString())
+                Log.d("msg", "token :" + data)
+                checkIsRegisteredSocialLogin(it.result?.user?.email.toString(),data)
+
+            } else {
+                Toast.makeText(this, "Google sign in failed:(", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    fun initNaver(){
+        mOAuthLoginModule = OAuthLogin.getInstance()
+        mContext = this
+        mOAuthLoginModule.init(
+            mContext
+            , getString(R.string.naver_client_id)
+            , getString(R.string.naver_client_secret)
+            , getString(R.string.naver_client_name)
+        )
+    }
+
+    fun initNaverHandler(){
+        mOAuthLoginHandler = object : OAuthLoginHandler() {
+            override fun run(success: Boolean) {
+                if (success) {
+                    val accessToken: String = mOAuthLoginModule.getAccessToken(baseContext)
+                    val refreshToken: String = mOAuthLoginModule.getRefreshToken(baseContext)
+                    Log.d("msg","token:"+accessToken)
+//                    val email =mOAuthLoginModule.requestApi(mContext,accessToken,"https://openapi.naver.com/v1/nid/me")
+//                val expiresAt: Long = mOAuthLoginModule.getExpiresAt(baseContext)
+//                val tokenType: String = mOAuthLoginModule.getTokenType(baseContext)
+                    checkIsRegisteredSocialLogin("네이버 로그인",accessToken)
+                } else {
+                    val errorCode: String = mOAuthLoginModule.getLastErrorCode(mContext).code
+                    val errorDesc = mOAuthLoginModule.getLastErrorDesc(mContext)
+
+                    Toast.makeText(
+                        baseContext, "errorCode:" + errorCode
+                                + ", errorDesc:" + errorDesc, Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+
+        }
     }
 
     //sharedPreference에 토큰 저장하는 함수

@@ -61,7 +61,7 @@
                 android:id="@+id/login_facebook"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="#ffffff"
+                android:background="@color/white"
                 android:scaleType="fitCenter"
                 android:src="@drawable/facebook" />
         </FrameLayout>
@@ -72,7 +72,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:scaleType="fitCenter"
-                android:background="#ffffff"
+                android:background="@color/white"
                 android:src="@drawable/google" />
         <ImageButton
             android:id="@+id/login_kakao"
@@ -80,15 +80,15 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:scaleType="fitCenter"
-            android:background="#ffffff"
+            android:background="@color/white"
             android:src="@drawable/kakao"/>
-        <ImageButton
+        <com.nhn.android.naverlogin.ui.view.OAuthLoginButton
             android:id="@+id/login_naver"
             android:layout_marginLeft="5dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:scaleType="fitCenter"
-            android:background="#ffffff"
+            android:background="@color/white"
             android:src="@drawable/naver"/>
 
     </LinearLayout>

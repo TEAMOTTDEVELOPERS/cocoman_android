@@ -28,23 +28,16 @@
                 android:layout_height="wrap_content"
                 android:text = "Title"
                 android:textSize="20dp"
-                android:textColor="#ffffff"
+                android:textColor="@color/white"
                 android:textStyle="bold"/>
             <TextView
                 android:id="@+id/content_year"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2020"
-                android:textColor="#ffffff"
+                android:textColor="@color/white"
                 android:textSize="18dp"/>
-<!--            <TextView-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:id="@+id/content_rating"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:textColor="#ffffff"-->
-<!--                android:text="0"-->
-<!--                android:textSize="50dp"/>-->
+
             <RatingBar
                 android:id="@+id/content_star"
                 android:layout_width="wrap_content"
