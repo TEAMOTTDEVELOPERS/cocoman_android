@@ -1,61 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.InitialRatingActivity"
-    android:orientation="vertical"
-    android:background="#131313"
-    android:padding="5dp">
-    <LinearLayout
+    tools:context=".activity.TestActivity">
+
+    <com.scwang.wave.MultiWaveHeader
+        android:id="@+id/waveHeader"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        android:background="@color/black">
-        <LinearLayout
-            android:layout_width="335dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/rating_totalNum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textColor="#F4F4F4"
-                android:textSize="60dp"/>
-            <TextView
-                android:id="@+id/rating_ment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="10개 이상의 콘텐츠를 평가해주세요."
-                android:textColor="#F4F4F4"
-                android:textSize="15dp"/>
-        </LinearLayout>
+        android:layout_height="150dp"
+        android:elevation="-1dp"
+        android:scaleY="1"
+        app:mwhCloseColor="@color/colorPrimary"
+        app:mwhStartColor="@color/colorAccent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
         <Button
             android:id="@+id/ok_rating"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:layout_height="30dp"
             android:text="완료"
-            android:textColor="#ffffff"
-            android:layout_gravity="center_horizontal"
-            android:background="@color/black"
-            android:layout_marginBottom="60dp"
-            />
+            android:textColor="@color/white"
+            android:background="#00ff0000"
+            android:layout_marginLeft="350dp"/>
+        <LinearLayout
+            android:id="@+id/rating_intro_ment"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+                <TextView
+                    android:id="@+id/rating_userNickName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="채원 "
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="님에 대해 더 알고 싶어요."
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    />
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10개 이상의 콘텐츠를 평가해주세요!"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:layout_gravity="center_horizontal"
+                />
+        </LinearLayout>
     </LinearLayout>
-
     <androidx.recyclerview.widget.RecyclerView
+        app:layout_constraintTop_toBottomOf="@+id/waveHeader"
+        app:layout_constraintBottom_toTopOf="@+id/progress_bar_layout"
         android:id="@+id/content_recylerview"
-        android:layout_marginTop="10dp"
+        android:layout_width="400dp"
+        android:layout_height="600dp"
+        android:layout_marginTop="5dp"
+        android:nestedScrollingEnabled="false"
+        android:orientation="vertical" />
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:nestedScrollingEnabled="false"
-        android:orientation="vertical"/>
-    <androidx.core.widget.ContentLoadingProgressBar
-        android:id="@+id/progress_bar_initialRating"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+        <RelativeLayout
+            android:id="@+id/progress_bar_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+            <ProgressBar
+                android:id="@+id/progress_bar_rating"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:backgroundTint="@color/gray"
+                android:max="10"
+                android:minHeight="10dip"
+                android:progress="0"
+                android:progressBackgroundTintMode="src_over"
+                android:progressTint="@color/colorAccent"
+                android:visibility="visible"/>
+            <TextView
+                android:id="@+id/progress_bar_count"
+                android:padding="2dp"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor="@color/white"
+                android:text="10개 남음"
+                android:textSize="13dp"
+                android:textStyle="bold"/>
+        </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

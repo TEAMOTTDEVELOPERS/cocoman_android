@@ -11,13 +11,16 @@ import com.example.cocoman.R
 import com.example.cocoman.`interface`.onContentRatingStatusChangeListener
 import com.example.cocoman.adapter.ContentRatingAdaptor
 import com.example.cocoman.data.ContentRating
+import com.scwang.wave.MultiWaveHeader
 import kotlinx.android.synthetic.main.activity_initial_rating_acitivity.*
 import kotlinx.android.synthetic.main.rating_content_view.*
 
 class InitialRatingActivity : AppCompatActivity() {
-    lateinit var totalRated : TextView
-    lateinit var rateComment: TextView
+    lateinit var rateCount : TextView
+    lateinit var wave : MultiWaveHeader
     lateinit var doneBtn: Button
+    lateinit var userNickname : TextView
+    lateinit var progressbar:ProgressBar
     var rateCompleted:Int = 0
     var shouldBeRated : Int = 10-rateCompleted
     var contentList = ArrayList<ContentRating>()
@@ -32,15 +35,15 @@ class InitialRatingActivity : AppCompatActivity() {
         setupListener()
         getData()
         layoutInit()
-
-
+        wavesettings()
+        userNickname.setText("지수")
 
     }
 
     fun getData(){
         // TODO: 서버로부터 데이터 가져오기 -- pagination은 서버가 완료되야 테스트 해보면서 할수 있을거같아요!
         for (i in 0 until 10) {
-            contentList.add(ContentRating("Harry Potter 2", 2012, 0.0F))
+            contentList.add(ContentRating("Harry Potter 2", 2012, "영화", "판타지",0.0F))
         }
     }
 
@@ -75,23 +78,32 @@ class InitialRatingActivity : AppCompatActivity() {
     }
 
     fun initView(){
-        // lateinit 으로 만든거 xml 에서 요소 찾아주기
-        totalRated = findViewById(R.id.rating_totalNum)
-        rateComment = findViewById(R.id.rating_ment)
+        userNickname = findViewById(R.id.rating_userNickName)
+        rateCount = findViewById(R.id.progress_bar_count)
         doneBtn = findViewById(R.id.ok_rating)
+        wave=findViewById(R.id.waveHeader)
+        progressbar = findViewById(R.id.progress_bar_rating)
     }
 
+    fun wavesettings(){
+        wave.velocity= 5F
+        wave.setProgress(1F)
+        wave.isRunning
+        waveHeader.gradientAngle = 95
+        waveHeader.waveHeight=40
+    }
 
     fun incrementRated(position: Int, score: Float){
         rateCompleted+=1
         shouldBeRated = 10-rateCompleted
         contentList[position].score = score
         Log.d("rate scor (INCREMENT)",""+contentList[position].score)
-        totalRated.setText(rateCompleted.toString())
         if(rateCompleted>=10){
-            rateComment.setText("10개 달성!")
+            rateCount.setText("10개 달성!")
+            progressbar.progress=10
         }else{
-            rateComment.setText(""+shouldBeRated+"개를 더 평가해주세요.")
+            rateCount.setText(""+shouldBeRated+"개 남음")
+            progressbar.progress=rateCompleted
         }
     }
 
@@ -99,12 +111,12 @@ class InitialRatingActivity : AppCompatActivity() {
         rateCompleted-=1
         shouldBeRated = 10-rateCompleted
         contentList[position].score = 0.0F
-        totalRated.setText(rateCompleted.toString())
-        Log.d("rate score",""+contentList[position].score)
         if(rateCompleted>=10){
-            rateComment.setText("10개 달성!")
+            rateCount.setText("10개 달성!")
+            progressbar.progress=10
         }else{
-            rateComment.setText(""+shouldBeRated+"개를 더 평가해주세요.")
+            rateCount.setText(""+shouldBeRated+"개 남음")
+            progressbar.progress=rateCompleted
         }
     }
 }
