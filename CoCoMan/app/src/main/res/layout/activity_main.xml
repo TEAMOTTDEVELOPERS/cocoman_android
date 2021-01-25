@@ -11,7 +11,7 @@
         android:id="@+id/top_logo"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:padding="10dp"
         >
         <TextView
@@ -21,17 +21,17 @@
             android:textSize="25dp"
             android:layout_gravity="center_vertical"/>
     </LinearLayout>
+
     <View
         android:id="@+id/line"
         android:layout_below="@+id/top_logo"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#A6A6A6"/>
-
    <androidx.viewpager.widget.ViewPager
        android:id="@+id/fragment_page"
        android:layout_width="match_parent"
-       android:layout_height="wrap_content"
+       android:layout_height="match_parent"
        android:layout_below="@+id/line"
        android:layout_above="@+id/nav_bar">
 
@@ -39,10 +39,11 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/nav_bar"
+        android:elevation="5dp"
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="-1dp"
-        app:tabIndicatorColor="@color/colorPrimaryDark" />
+        app:tabIndicatorColor="@color/colorPrimaryDark"
+        />
 
 </RelativeLayout>
