@@ -23,8 +23,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause.*
@@ -38,11 +36,6 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.net.HttpURLConnection
-import java.net.URL
-
 class LoginActivity : AppCompatActivity() {
 
 
@@ -60,7 +53,6 @@ class LoginActivity : AppCompatActivity() {
     val RC_SIGN_IN: Int = 1
     lateinit var mGoogleSignInClient: GoogleSignInClient
     lateinit var mGoogleSignInOptions: GoogleSignInOptions
-    private lateinit var firebaseAuth: FirebaseAuth
     lateinit var mOAuthLoginModule : OAuthLogin
     lateinit var  mOAuthLoginHandler: OAuthLoginHandler
 
@@ -74,7 +66,6 @@ class LoginActivity : AppCompatActivity() {
         val keyHash = Utility.getKeyHash(this)
         Log.d("Hash", keyHash)
         facebookInit()
-        firebaseAuth = FirebaseAuth.getInstance()
         initNaver()
     }
 
@@ -98,7 +89,6 @@ class LoginActivity : AppCompatActivity() {
             if (isLoggedIn()) {
                 val accessToken = AccessToken.getCurrentAccessToken()
                 getFacebookInfo(accessToken)
-
             }else{
             }
         }
@@ -128,7 +118,8 @@ class LoginActivity : AppCompatActivity() {
 
         naverBtn.setOAuthLoginHandler(mOAuthLoginHandler)
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestServerAuthCode("753386993138-ipr91dqokq943jjmoa9jsdpaf0h1qrmu.apps.googleusercontent.com")
+            .requestIdToken("753386993138-ipr91dqokq943jjmoa9jsdpaf0h1qrmu.apps.googleusercontent.com")
             .requestEmail()
             .build()
 
@@ -247,20 +238,6 @@ class LoginActivity : AppCompatActivity() {
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
-    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount,data:String) {
-        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
-        firebaseAuth.signInWithCredential(credential).addOnCompleteListener {
-            if (it.isSuccessful) {
-                Log.d("msg","email:"+ it.result?.user?.email.toString())
-                Log.d("msg", "token :" + data)
-                checkIsRegisteredSocialLogin(it.result?.user?.email.toString(),data)
-
-            } else {
-                Toast.makeText(this, "Google sign in failed:(", Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-
     fun initNaver(){
         mOAuthLoginModule = OAuthLogin.getInstance()
         mContext = this
@@ -371,10 +348,13 @@ class LoginActivity : AppCompatActivity() {
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)
-                account?.idToken?.let { firebaseAuthWithGoogle(account!!, it) }
+                Log.e("msg","get google id :"+account?.account?.name)
+                Log.e("msg","get google id :"+account?.id)
+                Log.e("msg","get google id :"+account?.idToken)
             } catch (e: ApiException) {
                 Toast.makeText(this, "Google sign in failed:(", Toast.LENGTH_LONG).show()
-                Log.d("msg",""+e.toString())
+                Log.e("msg", "error : ${e.message}")
+                Log.e("msg", "status : ${e.statusCode}")
             }
         }
     }

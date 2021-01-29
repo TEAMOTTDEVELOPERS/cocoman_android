@@ -11,11 +11,11 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.RadioButton
 import com.example.cocoman.R
-import com.example.cocoman.data.Register
-import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity : AppCompatActivity() {
 
+    private lateinit var genderFemale : RadioButton
+    private lateinit var genderMale: RadioButton
     lateinit var usernameView: EditText
     lateinit var userPasswordView: EditText
     lateinit var userPasswordCheckView:EditText
@@ -27,7 +27,7 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-        initView(this@RegisterActivity)
+        initView()
         setupListener()
 
     }
@@ -40,13 +40,14 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    fun initView(activity: Activity){
-        usernameView = activity.findViewById(R.id.id_register)
-        userPasswordView = activity.findViewById(R.id.password_register)
-        userPasswordCheckView = activity.findViewById(R.id.passwordCheck_register)
-        userAge = activity.findViewById(R.id.age_register)
-        createAccountBtn = activity.findViewById(R.id.make_account)
-        checkDuplicate = activity.findViewById(R.id.checkDuplicate_register)
+    fun initView(){
+        usernameView = findViewById(R.id.id_register)
+        userPasswordView = findViewById(R.id.password_register)
+        userPasswordCheckView = findViewById(R.id.passwordCheck_register)
+        userAge = findViewById(R.id.age_register)
+        createAccountBtn = findViewById(R.id.make_account)
+        checkDuplicate = findViewById(R.id.checkDuplicate_register)
+        genderFemale = findViewById(R.id.gender_female)
     }
 
     fun getUsername():String{
@@ -62,10 +63,10 @@ class RegisterActivity : AppCompatActivity() {
         return userAge.text.toString().toInt()
     }
     fun getUserGender():String{
-        if(gender_female.isChecked){
+        if(genderFemale.isChecked){
             return "Female"
         }
-        else if(gender_male.isChecked){
+        else if(genderMale.isChecked){
             return "Male"
         }
         else{

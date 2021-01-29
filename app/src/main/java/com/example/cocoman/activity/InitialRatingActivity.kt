@@ -7,13 +7,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.cocoman.R
 import com.example.cocoman.`interface`.onContentRatingStatusChangeListener
 import com.example.cocoman.adapter.ContentRatingAdaptor
 import com.example.cocoman.data.ContentRating
 import com.scwang.wave.MultiWaveHeader
-import kotlinx.android.synthetic.main.activity_initial_rating_acitivity.*
-import kotlinx.android.synthetic.main.rating_content_view.*
 
 class InitialRatingActivity : AppCompatActivity() {
     lateinit var rateCount : TextView
@@ -21,6 +20,7 @@ class InitialRatingActivity : AppCompatActivity() {
     lateinit var doneBtn: Button
     lateinit var userNickname : TextView
     lateinit var progressbar:ProgressBar
+    lateinit var contentRecyclerView: RecyclerView
     var rateCompleted:Int = 0
     var shouldBeRated : Int = 10-rateCompleted
     var contentList = ArrayList<ContentRating>()
@@ -60,8 +60,8 @@ class InitialRatingActivity : AppCompatActivity() {
                decrementRated(position)
             }
         })
-        content_recylerview.adapter=adapter
-        content_recylerview.layoutManager = LinearLayoutManager(this@InitialRatingActivity)
+        contentRecyclerView.adapter=adapter
+        contentRecyclerView.layoutManager = LinearLayoutManager(this@InitialRatingActivity)
     }
     fun setupListener(){
         doneBtn.setOnClickListener {
@@ -78,6 +78,7 @@ class InitialRatingActivity : AppCompatActivity() {
     }
 
     fun initView(){
+        contentRecyclerView = findViewById(R.id.content_recylerview)
         userNickname = findViewById(R.id.rating_userNickName)
         rateCount = findViewById(R.id.progress_bar_count)
         doneBtn = findViewById(R.id.ok_rating)
@@ -89,8 +90,8 @@ class InitialRatingActivity : AppCompatActivity() {
         wave.velocity= 5F
         wave.setProgress(1F)
         wave.isRunning
-        waveHeader.gradientAngle = 95
-        waveHeader.waveHeight=40
+        wave.gradientAngle = 95
+        wave.waveHeight=40
     }
 
     fun incrementRated(position: Int, score: Float){
