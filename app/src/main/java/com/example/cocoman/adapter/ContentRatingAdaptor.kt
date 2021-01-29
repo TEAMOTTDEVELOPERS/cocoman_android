@@ -17,7 +17,6 @@ import com.example.cocoman.`interface`.onContentRatingStatusChangeListener
 import com.example.cocoman.activity.InitialRatingActivity
 import com.example.cocoman.data.ContentRating
 import com.example.cocoman.network.MasterApplication
-import kotlinx.android.synthetic.main.rating_content_view.view.*
 
 class ContentRatingAdaptor (
     val contentList: ArrayList<ContentRating>,
