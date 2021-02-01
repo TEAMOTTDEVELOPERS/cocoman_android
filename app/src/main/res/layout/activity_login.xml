@@ -22,6 +22,7 @@
         android:layout_marginTop="45dp"
         android:background="@drawable/gray_edittext_selector"
         android:hint="아이디 또는 이메일"
+        android:textStyle="normal"
         android:textSize="14dp"
         android:paddingLeft="42dp"
         android:layout_marginLeft="24dp"
@@ -61,6 +62,7 @@
         android:layout_marginRight="24dp"
         android:background="@drawable/gray_edittext_selector"
         android:hint="비밀번호"
+        android:textStyle="normal"
         android:textSize="14dp"
         android:paddingLeft="42dp"
         app:layout_constraintHorizontal_bias="0.0"
@@ -95,36 +97,39 @@
         android:orientation="horizontal"
         app:layout_constraintLeft_toLeftOf="@id/insert_pw"
         app:layout_constraintTop_toBottomOf="@+id/insert_pw">
-
-        <RadioButton
-            android:id="@+id/autologin_login"
-            android:button="@null"
+        <ImageView
+            android:id="@+id/autologinBtn_login"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/checkboxempty"/>
+        <TextView
+            android:id="@+id/autologinMent_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="16dp"
             android:text="자동 로그인"
-            android:textColor="@color/font_black"
-            android:textSize="14dp"
-            android:drawableLeft="@drawable/radiobutton"
-            />
-
-        <RadioButton
-            android:id="@+id/saveid_login"
-            android:button="@null"
+            android:textStyle="normal"
+            android:layout_marginLeft="6dp"/>
+        <ImageView
+            android:id="@+id/saveIdBtn_login"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="16dp"
+            android:src="@drawable/checkboxempty"/>
+        <TextView
+            android:id="@+id/saveIdMent_login"
             android:layout_width="wrap_content"
+            android:fontFamily="@font/notosansregular"
             android:layout_height="wrap_content"
             android:text="아이디 저장"
-            android:textSize="14dp"
-            android:textColor="@color/font_black"
-            android:checked="false"
-
-            android:drawableLeft="@drawable/radiobutton"/>
+            android:textStyle="normal"
+            android:layout_marginLeft="6dp"/>
     </RadioGroup>
     <TextView
         android:id="@+id/error_msg_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="비밀번호가 일치하지 않습니다."
+        android:fontFamily="@font/notosansregular"
         android:visibility="invisible"
         android:textColor="@color/wrongRed"
         app:layout_constraintTop_toBottomOf="@+id/radioGroup_login"
@@ -143,6 +148,7 @@
         android:layout_marginTop="40dp"
         android:background="@drawable/login_btn_background"
         android:text="로그인"
+        android:textStyle="normal"
         android:textSize="14dp"
         android:textColor="@color/white"/>
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -213,6 +219,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="계정을 잊으셨나요? "
+            android:textStyle="normal"
             android:textColor="@color/font_gray"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -222,6 +229,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ID찾기 "
+            android:textStyle="normal"
             android:textColor="@color/blue_lostIDPW"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toRightOf="@id/findComment"
@@ -231,6 +239,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="또는 "
+            android:textStyle="normal"
             android:textColor="@color/font_black"
             app:layout_constraintLeft_toRightOf="@id/lost_id"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -239,6 +248,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="비밀번호 찾기"
+            android:textStyle="normal"
             android:textColor="@color/blue_lostIDPW"
             app:layout_constraintLeft_toRightOf="@id/or_login"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -256,6 +266,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="처음이신가요? "
+            android:textStyle="normal"
             android:textColor="@color/font_gray"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"/>
@@ -264,6 +275,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="회원가입하기 >"
+            android:textStyle="normal"
             android:textColor="@color/font_black"
             app:layout_constraintLeft_toRightOf="@id/firstTime_comment"
             app:layout_constraintTop_toTopOf="parent"

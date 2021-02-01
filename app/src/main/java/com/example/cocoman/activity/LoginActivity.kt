@@ -39,8 +39,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 class LoginActivity : AppCompatActivity() {
-
-
     lateinit var userId :EditText
     lateinit var userPw: EditText
     lateinit var loginBtn: Button
@@ -52,6 +50,8 @@ class LoginActivity : AppCompatActivity() {
     lateinit var personIcon : ImageView
     lateinit var lockIcon : ImageView
     lateinit var errorMsg : TextView
+    lateinit var autoLoginBtn:ImageView
+    lateinit var saveIdBtn: ImageView
     lateinit var facebookBtn :LoginButton
     lateinit var fbBtn:ImageView
     lateinit var googleBtn :ImageView
@@ -64,7 +64,8 @@ class LoginActivity : AppCompatActivity() {
     lateinit var mGoogleSignInOptions: GoogleSignInOptions
     lateinit var mOAuthLoginModule : OAuthLogin
     lateinit var  mOAuthLoginHandler: OAuthLoginHandler
-
+    // RememberChecked --> 0 = none, 1 = autologin, 2 = saveID
+    var rememberChecked:Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -110,6 +111,7 @@ class LoginActivity : AppCompatActivity() {
         //자물쇠 이미지 바꾸기
         userPw.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus)
+                // TODO: 비번으로 왔으면 자동으로 위에 적은 아이디가 어플에 등록되어있는지 check!
                 lockIcon.setImageResource(R.drawable.insertpwaf)
             else
                 lockIcon.setImageResource(R.drawable.insertpwbf)
@@ -190,6 +192,27 @@ class LoginActivity : AppCompatActivity() {
             userId.setText("")
         }
 
+        saveIdBtn.setOnClickListener {
+            // 원래 체크 되어있었는데 한번더 누름 --> uncheck
+            if(rememberChecked == 2){
+                rememberChecked = 0
+                changeRadioStatus(rememberChecked)
+            }else{
+                rememberChecked = 2
+                changeRadioStatus(rememberChecked)
+            }
+        }
+        autoLoginBtn.setOnClickListener {
+            // 원래 체크 되어있었는데 한번더 누름 --> uncheck
+            if(rememberChecked == 1){
+                rememberChecked = 0
+                changeRadioStatus(rememberChecked)
+            }else{
+                rememberChecked = 1
+                changeRadioStatus(rememberChecked)
+            }
+        }
+
         fbBtn.setOnClickListener{
             facebookBtn.performClick()
             if (isLoggedIn()) {
@@ -228,7 +251,8 @@ class LoginActivity : AppCompatActivity() {
         personIcon = activity.findViewById(R.id.insert_id_personicon)
         lockIcon = activity.findViewById(R.id.insert_pw_lockicon)
         errorMsg = activity.findViewById(R.id.error_msg_login)
-
+        autoLoginBtn = activity.findViewById(R.id.autologinBtn_login)
+        saveIdBtn = activity.findViewById(R.id.saveIdBtn_login)
         naverBtn.setOAuthLoginHandler(mOAuthLoginHandler)
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestServerAuthCode("753386993138-ipr91dqokq943jjmoa9jsdpaf0h1qrmu.apps.googleusercontent.com")
@@ -239,6 +263,39 @@ class LoginActivity : AppCompatActivity() {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
 
+    }
+
+    //자동 로그인 & 아이디 저장 라디오버튼 check or uncheck 해주는 함수
+    private fun changeRadioStatus(rememberChecked:Int){
+        when(rememberChecked){
+            0->{
+                autoLoginBtn.setImageResource(R.drawable.checkboxempty)
+                saveIdBtn.setImageResource(R.drawable.checkboxempty)
+            }
+            1->{
+                autoLoginBtn.setImageResource(R.drawable.checkboxchecked)
+                saveIdBtn.setImageResource(R.drawable.checkboxempty)
+            }
+            2->{
+                autoLoginBtn.setImageResource(R.drawable.checkboxempty)
+                saveIdBtn.setImageResource(R.drawable.checkboxchecked)
+            }
+        }
+    }
+
+    // 자동로그인 / 아이디저장 선택에 따라 동작
+    private fun rememberStatus(rememberChecked: Int){
+        when(rememberChecked){
+            1->{
+                // TODO: 자동 로그인! ( 아이디 비번 & token save)
+            }
+            2->{
+                //TODO: 아이디 save
+            }
+            else->{
+                // 아무것도 안함
+            }
+        }
     }
 
     // 일반 로그인
@@ -261,6 +318,8 @@ class LoginActivity : AppCompatActivity() {
                     finish()
                 }
                 else{
+                    errorMsg.visibility=View.VISIBLE
+                    errorMsg.setText("비밀번호가 일치하지 않습니다")
                     Toast.makeText(this@LoginActivity,"로그인 실패. \n아이디와 비밀번호를 확인한 후 다시 시도해주세요.",Toast.LENGTH_SHORT).show()
                 }
             }
