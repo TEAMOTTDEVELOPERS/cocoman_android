@@ -3,12 +3,14 @@ package com.example.cocoman.activity
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.Toast
+import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cocoman.R
 import com.example.cocoman.data.LoginToken
@@ -42,11 +44,18 @@ class LoginActivity : AppCompatActivity() {
     lateinit var userId :EditText
     lateinit var userPw: EditText
     lateinit var loginBtn: Button
-    lateinit var registerBtn : Button
+    lateinit var registerBtn : TextView
+    lateinit var findPwBtn : TextView
+    lateinit var findIDBtn: TextView
+    lateinit var deleteIDBtn:ImageView
+    lateinit var deletePwBtn:ImageView
+    lateinit var personIcon : ImageView
+    lateinit var lockIcon : ImageView
+    lateinit var errorMsg : TextView
     lateinit var facebookBtn :LoginButton
-    lateinit var fbBtn:ImageButton
-    lateinit var googleBtn :ImageButton
-    lateinit var kakaoBtn :ImageButton
+    lateinit var fbBtn:ImageView
+    lateinit var googleBtn :ImageView
+    lateinit var kakaoBtn :ImageView
     lateinit var naverBtn :OAuthLoginButton
     lateinit var callbackManager:CallbackManager
     lateinit var mContext: Context
@@ -84,6 +93,103 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
+        findPwBtn.setOnClickListener{
+
+        }
+
+        findIDBtn.setOnClickListener {
+
+        }
+        // 사람 이미지 바꾸기
+        userId.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus)
+                personIcon.setImageResource(R.drawable.insertidaf)
+            else
+                personIcon.setImageResource(R.drawable.insertidbf)
+        }
+        //자물쇠 이미지 바꾸기
+        userPw.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus)
+                lockIcon.setImageResource(R.drawable.insertpwaf)
+            else
+                lockIcon.setImageResource(R.drawable.insertpwbf)
+        }
+
+        //아이디 부분 x 버튼 표시위한 리스너
+        userId.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if (s != null) {
+                    if(s.isNotEmpty()){
+                        deleteIDBtn.visibility = View.VISIBLE
+                    }else{
+                        deleteIDBtn.visibility = View.GONE
+                    }
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                if (s != null) {
+                    if(s.isNotEmpty()){
+                        deleteIDBtn.visibility = View.VISIBLE
+                    }else{
+                        deleteIDBtn.visibility = View.GONE
+                    }
+                }
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s != null) {
+                    if(s.isNotEmpty()){
+                        deleteIDBtn.visibility = View.VISIBLE
+                    }else{
+                        deleteIDBtn.visibility = View.GONE
+                    }
+                }
+            }
+        })
+
+        //비번 부분 x 버튼 표시위한 리스너
+        userPw.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if (s != null) {
+                    if(s.isNotEmpty()){
+                        deletePwBtn.visibility = View.VISIBLE
+                    }else{
+                        deletePwBtn.visibility = View.GONE
+                    }
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                if (s != null) {
+                    if(s.isNotEmpty()){
+                        deletePwBtn.visibility = View.VISIBLE
+                    }else{
+                        deletePwBtn.visibility = View.GONE
+                    }
+                }
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s != null) {
+                    if(s.isNotEmpty()){
+                        deletePwBtn.visibility = View.VISIBLE
+                    }else{
+                        deletePwBtn.visibility = View.GONE
+                    }
+                }
+            }
+        })
+
+        //x 버튼 누르면 다 지우게 하기 위함
+        deletePwBtn.setOnClickListener {
+            userPw.setText("")
+        }
+
+        deleteIDBtn.setOnClickListener {
+            userId.setText("")
+        }
+
         fbBtn.setOnClickListener{
             facebookBtn.performClick()
             if (isLoggedIn()) {
@@ -110,11 +216,18 @@ class LoginActivity : AppCompatActivity() {
         userPw = activity.findViewById(R.id.insert_pw)
         loginBtn = activity.findViewById(R.id.login_btn)
         registerBtn = activity.findViewById(R.id.register_btn)
+        findIDBtn = activity.findViewById(R.id.lost_id)
+        findPwBtn = activity.findViewById(R.id.lost_pw)
+        deleteIDBtn = activity.findViewById(R.id.delete_id_login)
+        deletePwBtn = activity.findViewById(R.id.delete_pw_login)
         facebookBtn = activity.findViewById(R.id.login_button_facebook)
         fbBtn = activity.findViewById(R.id.login_facebook)
         googleBtn = activity.findViewById(R.id.login_google)
         kakaoBtn = activity.findViewById(R.id.login_kakao)
         naverBtn = activity.findViewById(R.id.login_naver)
+        personIcon = activity.findViewById(R.id.insert_id_personicon)
+        lockIcon = activity.findViewById(R.id.insert_pw_lockicon)
+        errorMsg = activity.findViewById(R.id.error_msg_login)
 
         naverBtn.setOAuthLoginHandler(mOAuthLoginHandler)
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -124,6 +237,7 @@ class LoginActivity : AppCompatActivity() {
             .build()
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+
 
     }
 
