@@ -64,7 +64,7 @@ class LoginActivity : AppCompatActivity() {
     lateinit var mGoogleSignInOptions: GoogleSignInOptions
     lateinit var mOAuthLoginModule : OAuthLogin
     lateinit var  mOAuthLoginHandler: OAuthLoginHandler
-    // RememberChecked --> 0 = none, 1 = autologin, 2 = saveID
+    // rememberChecked --> 0 = none, 1 = autologin, 2 = saveID
     var rememberChecked:Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -117,71 +117,9 @@ class LoginActivity : AppCompatActivity() {
                 lockIcon.setImageResource(R.drawable.insertpwbf)
         }
 
-        //아이디 부분 x 버튼 표시위한 리스너
-        userId.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                if (s != null) {
-                    if(s.isNotEmpty()){
-                        deleteIDBtn.visibility = View.VISIBLE
-                    }else{
-                        deleteIDBtn.visibility = View.GONE
-                    }
-                }
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                if (s != null) {
-                    if(s.isNotEmpty()){
-                        deleteIDBtn.visibility = View.VISIBLE
-                    }else{
-                        deleteIDBtn.visibility = View.GONE
-                    }
-                }
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s != null) {
-                    if(s.isNotEmpty()){
-                        deleteIDBtn.visibility = View.VISIBLE
-                    }else{
-                        deleteIDBtn.visibility = View.GONE
-                    }
-                }
-            }
-        })
-
-        //비번 부분 x 버튼 표시위한 리스너
-        userPw.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                if (s != null) {
-                    if(s.isNotEmpty()){
-                        deletePwBtn.visibility = View.VISIBLE
-                    }else{
-                        deletePwBtn.visibility = View.GONE
-                    }
-                }
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                if (s != null) {
-                    if(s.isNotEmpty()){
-                        deletePwBtn.visibility = View.VISIBLE
-                    }else{
-                        deletePwBtn.visibility = View.GONE
-                    }
-                }
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s != null) {
-                    if(s.isNotEmpty()){
-                        deletePwBtn.visibility = View.VISIBLE
-                    }else{
-                        deletePwBtn.visibility = View.GONE
-                    }
-                }
-            }
-        })
+        //edittext 필드에 text 있으면 x 버튼 표시, 없으면 x 버튼도 없애기
+        showDeleteButton(userPw,deletePwBtn)
+        showDeleteButton(userId,deleteIDBtn)
 
         //x 버튼 누르면 다 지우게 하기 위함
         deletePwBtn.setOnClickListener {
@@ -264,6 +202,39 @@ class LoginActivity : AppCompatActivity() {
 
 
     }
+    private fun showDeleteButton(editText: EditText,imageView: ImageView){
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if (s != null) {
+                    if(s.isNotEmpty()){
+                        imageView.visibility = View.VISIBLE
+                    }else{
+                        imageView.visibility = View.GONE
+                    }
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                if (s != null) {
+                    if(s.isNotEmpty()){
+                        imageView.visibility = View.VISIBLE
+                    }else{
+                        imageView.visibility = View.GONE
+                    }
+                }
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s != null) {
+                    if(s.isNotEmpty()){
+                        imageView.visibility = View.VISIBLE
+                    }else{
+                        imageView.visibility = View.GONE
+                    }
+                }
+            }
+        })
+    }
 
     //자동 로그인 & 아이디 저장 라디오버튼 check or uncheck 해주는 함수
     private fun changeRadioStatus(rememberChecked:Int){
@@ -300,10 +271,10 @@ class LoginActivity : AppCompatActivity() {
 
     // 일반 로그인
     private fun tryLogin(intent: Intent){
-        val userId = userId.text.toString()
-        val userPw = userPw.text.toString()
+        val username = userId.text.toString()
+        val userPassword = userPw.text.toString()
 
-        (application as MasterApplication).retrofitService.login(userId,userPw).enqueue(object: Callback<LoginToken>{
+        (application as MasterApplication).retrofitService.login(username,userPassword).enqueue(object: Callback<LoginToken>{
             override fun onFailure(call: Call<LoginToken>, t: Throwable) {
                 Toast.makeText(this@LoginActivity,"서버와 통신 실패!",Toast.LENGTH_SHORT).show()
             }
@@ -320,13 +291,51 @@ class LoginActivity : AppCompatActivity() {
                 else{
                     errorMsg.visibility=View.VISIBLE
                     errorMsg.setText("비밀번호가 일치하지 않습니다")
+                    errorOccuredEditTextChangeUI(userPw)
                     Toast.makeText(this@LoginActivity,"로그인 실패. \n아이디와 비밀번호를 확인한 후 다시 시도해주세요.",Toast.LENGTH_SHORT).show()
                 }
             }
         })
 
     }
+    fun errorOccuredEditTextChangeUI(editText: EditText){
+        editText.setBackgroundResource(R.drawable.red_edittext)
+        changedError(editText)
+    }
+    private fun changedError(editText: EditText){
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if (s != null) {
+                    if(s.isNotEmpty()){
+                        errorMsg.visibility = View.GONE
+                        editText.setBackgroundResource(R.drawable.gray_edittext_selector)
+                    }else{
 
+                    }
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                if (s != null) {
+                    if(s.isNotEmpty()){
+
+                    }else{
+
+                    }
+                }
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s != null) {
+                    if(s.isNotEmpty()){
+                        errorMsg.visibility = View.GONE
+                        editText.setBackgroundResource(R.drawable.gray_edittext_selector)
+                    }else{
+                    }
+                }
+            }
+        })
+    }
     private fun tryKakaoLogin(){
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {

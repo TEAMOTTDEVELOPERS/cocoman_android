@@ -52,6 +52,7 @@ dependencies {
     implementation deps.rxkotlin3
     implementation deps.play_service_auth
     implementation deps.junit
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
     //Android Testing Support Library
     androidTestImplementation deps.atsl.ext_junit
