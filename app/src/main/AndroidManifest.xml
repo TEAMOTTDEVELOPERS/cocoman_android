@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".activity.SelectOTTActivity">
+        </activity>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -47,11 +48,9 @@
                     android:scheme="kakaoe2aede34f771b87b113aabd6b0f9dd3c" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.InitialRatingActivity">
-
-        </activity>
+        <activity android:name=".activity.InitialRatingActivity"></activity>
         <activity android:name=".activity.RegisterActivity" />
-        <activity android:name=".activity.LoginActivity" >
+        <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

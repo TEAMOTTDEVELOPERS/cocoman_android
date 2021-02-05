@@ -3,12 +3,14 @@ package com.example.cocoman.activity
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.Toast
+import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.cocoman.R
 import com.example.cocoman.data.LoginToken
@@ -37,16 +39,23 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 class LoginActivity : AppCompatActivity() {
-
-
     lateinit var userId :EditText
     lateinit var userPw: EditText
     lateinit var loginBtn: Button
-    lateinit var registerBtn : Button
+    lateinit var registerBtn : TextView
+    lateinit var findPwBtn : TextView
+    lateinit var findIDBtn: TextView
+    lateinit var deleteIDBtn:ImageView
+    lateinit var deletePwBtn:ImageView
+    lateinit var personIcon : ImageView
+    lateinit var lockIcon : ImageView
+    lateinit var errorMsg : TextView
+    lateinit var autoLoginBtn:ImageView
+    lateinit var saveIdBtn: ImageView
     lateinit var facebookBtn :LoginButton
-    lateinit var fbBtn:ImageButton
-    lateinit var googleBtn :ImageButton
-    lateinit var kakaoBtn :ImageButton
+    lateinit var fbBtn:ImageView
+    lateinit var googleBtn :ImageView
+    lateinit var kakaoBtn :ImageView
     lateinit var naverBtn :OAuthLoginButton
     lateinit var callbackManager:CallbackManager
     lateinit var mContext: Context
@@ -55,7 +64,8 @@ class LoginActivity : AppCompatActivity() {
     lateinit var mGoogleSignInOptions: GoogleSignInOptions
     lateinit var mOAuthLoginModule : OAuthLogin
     lateinit var  mOAuthLoginHandler: OAuthLoginHandler
-
+    // rememberChecked --> 0 = none, 1 = autologin, 2 = saveID
+    var rememberChecked:Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,6 +94,63 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
+        findPwBtn.setOnClickListener{
+
+        }
+
+        findIDBtn.setOnClickListener {
+
+        }
+        // 사람 이미지 바꾸기
+        userId.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus)
+                personIcon.setImageResource(R.drawable.insertidaf)
+            else
+                personIcon.setImageResource(R.drawable.insertidbf)
+        }
+        //자물쇠 이미지 바꾸기
+        userPw.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus)
+                // TODO: 비번으로 왔으면 자동으로 위에 적은 아이디가 어플에 등록되어있는지 check!
+                lockIcon.setImageResource(R.drawable.insertpwaf)
+            else
+                lockIcon.setImageResource(R.drawable.insertpwbf)
+        }
+
+        //edittext 필드에 text 있으면 x 버튼 표시, 없으면 x 버튼도 없애기
+        showDeleteButton(userPw,deletePwBtn)
+        showDeleteButton(userId,deleteIDBtn)
+
+        //x 버튼 누르면 다 지우게 하기 위함
+        deletePwBtn.setOnClickListener {
+            userPw.setText("")
+        }
+
+        deleteIDBtn.setOnClickListener {
+            userId.setText("")
+        }
+
+        saveIdBtn.setOnClickListener {
+            // 원래 체크 되어있었는데 한번더 누름 --> uncheck
+            if(rememberChecked == 2){
+                rememberChecked = 0
+                changeRadioStatus(rememberChecked)
+            }else{
+                rememberChecked = 2
+                changeRadioStatus(rememberChecked)
+            }
+        }
+        autoLoginBtn.setOnClickListener {
+            // 원래 체크 되어있었는데 한번더 누름 --> uncheck
+            if(rememberChecked == 1){
+                rememberChecked = 0
+                changeRadioStatus(rememberChecked)
+            }else{
+                rememberChecked = 1
+                changeRadioStatus(rememberChecked)
+            }
+        }
+
         fbBtn.setOnClickListener{
             facebookBtn.performClick()
             if (isLoggedIn()) {
@@ -110,12 +177,20 @@ class LoginActivity : AppCompatActivity() {
         userPw = activity.findViewById(R.id.insert_pw)
         loginBtn = activity.findViewById(R.id.login_btn)
         registerBtn = activity.findViewById(R.id.register_btn)
+        findIDBtn = activity.findViewById(R.id.lost_id)
+        findPwBtn = activity.findViewById(R.id.lost_pw)
+        deleteIDBtn = activity.findViewById(R.id.delete_id_login)
+        deletePwBtn = activity.findViewById(R.id.delete_pw_login)
         facebookBtn = activity.findViewById(R.id.login_button_facebook)
         fbBtn = activity.findViewById(R.id.login_facebook)
         googleBtn = activity.findViewById(R.id.login_google)
         kakaoBtn = activity.findViewById(R.id.login_kakao)
         naverBtn = activity.findViewById(R.id.login_naver)
-
+        personIcon = activity.findViewById(R.id.insert_id_personicon)
+        lockIcon = activity.findViewById(R.id.insert_pw_lockicon)
+        errorMsg = activity.findViewById(R.id.error_msg_login)
+        autoLoginBtn = activity.findViewById(R.id.autologinBtn_login)
+        saveIdBtn = activity.findViewById(R.id.saveIdBtn_login)
         naverBtn.setOAuthLoginHandler(mOAuthLoginHandler)
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestServerAuthCode("753386993138-ipr91dqokq943jjmoa9jsdpaf0h1qrmu.apps.googleusercontent.com")
@@ -125,14 +200,81 @@ class LoginActivity : AppCompatActivity() {
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
+
+    }
+    private fun showDeleteButton(editText: EditText,imageView: ImageView){
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if (s != null) {
+                    if(s.isNotEmpty()){
+                        imageView.visibility = View.VISIBLE
+                    }else{
+                        imageView.visibility = View.GONE
+                    }
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                if (s != null) {
+                    if(s.isNotEmpty()){
+                        imageView.visibility = View.VISIBLE
+                    }else{
+                        imageView.visibility = View.GONE
+                    }
+                }
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s != null) {
+                    if(s.isNotEmpty()){
+                        imageView.visibility = View.VISIBLE
+                    }else{
+                        imageView.visibility = View.GONE
+                    }
+                }
+            }
+        })
+    }
+
+    //자동 로그인 & 아이디 저장 라디오버튼 check or uncheck 해주는 함수
+    private fun changeRadioStatus(rememberChecked:Int){
+        when(rememberChecked){
+            0->{
+                autoLoginBtn.setImageResource(R.drawable.checkboxempty)
+                saveIdBtn.setImageResource(R.drawable.checkboxempty)
+            }
+            1->{
+                autoLoginBtn.setImageResource(R.drawable.checkboxchecked)
+                saveIdBtn.setImageResource(R.drawable.checkboxempty)
+            }
+            2->{
+                autoLoginBtn.setImageResource(R.drawable.checkboxempty)
+                saveIdBtn.setImageResource(R.drawable.checkboxchecked)
+            }
+        }
+    }
+
+    // 자동로그인 / 아이디저장 선택에 따라 동작
+    private fun rememberStatus(rememberChecked: Int){
+        when(rememberChecked){
+            1->{
+                // TODO: 자동 로그인! ( 아이디 비번 & token save)
+            }
+            2->{
+                //TODO: 아이디 save
+            }
+            else->{
+                // 아무것도 안함
+            }
+        }
     }
 
     // 일반 로그인
     private fun tryLogin(intent: Intent){
-        val userId = userId.text.toString()
-        val userPw = userPw.text.toString()
+        val username = userId.text.toString()
+        val userPassword = userPw.text.toString()
 
-        (application as MasterApplication).retrofitService.login(userId,userPw).enqueue(object: Callback<LoginToken>{
+        (application as MasterApplication).retrofitService.login(username,userPassword).enqueue(object: Callback<LoginToken>{
             override fun onFailure(call: Call<LoginToken>, t: Throwable) {
                 Toast.makeText(this@LoginActivity,"서버와 통신 실패!",Toast.LENGTH_SHORT).show()
             }
@@ -147,13 +289,53 @@ class LoginActivity : AppCompatActivity() {
                     finish()
                 }
                 else{
+                    errorMsg.visibility=View.VISIBLE
+                    errorMsg.setText("비밀번호가 일치하지 않습니다")
+                    errorOccuredEditTextChangeUI(userPw)
                     Toast.makeText(this@LoginActivity,"로그인 실패. \n아이디와 비밀번호를 확인한 후 다시 시도해주세요.",Toast.LENGTH_SHORT).show()
                 }
             }
         })
 
     }
+    fun errorOccuredEditTextChangeUI(editText: EditText){
+        editText.setBackgroundResource(R.drawable.red_edittext)
+        changedError(editText)
+    }
+    private fun changedError(editText: EditText){
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if (s != null) {
+                    if(s.isNotEmpty()){
+                        errorMsg.visibility = View.GONE
+                        editText.setBackgroundResource(R.drawable.gray_edittext_selector)
+                    }else{
 
+                    }
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                if (s != null) {
+                    if(s.isNotEmpty()){
+
+                    }else{
+
+                    }
+                }
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s != null) {
+                    if(s.isNotEmpty()){
+                        errorMsg.visibility = View.GONE
+                        editText.setBackgroundResource(R.drawable.gray_edittext_selector)
+                    }else{
+                    }
+                }
+            }
+        })
+    }
     private fun tryKakaoLogin(){
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {

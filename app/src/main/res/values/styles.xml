@@ -5,6 +5,15 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <!--custom font-family 적용-->
+        <item name="android:textViewStyle">@style/notosans_customTextViewFontStyle</item>
+        <item name="android:buttonStyle">@style/notosans_customButtonFontStyle</item>
+        <item name="android:editTextStyle">@style/notosans_customEditTextFontStyle</item>
+        <item name="android:radioButtonStyle">@style/notosans_customRadioButtonFontStyle</item>
+        <item name="android:checkboxStyle">@style/notosans_customCheckboxFontStyle</item>
     </style>
+
+
 
 </resources>
