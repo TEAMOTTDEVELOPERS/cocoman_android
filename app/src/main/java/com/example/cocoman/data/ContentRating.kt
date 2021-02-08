@@ -1,7 +1,8 @@
 package com.example.cocoman.data
 
 data class ContentRating(
-    var title : String,
+    var id: String,
+    var title: String,
     //var poster: String,
     var year: Int,
     var contentType: String,

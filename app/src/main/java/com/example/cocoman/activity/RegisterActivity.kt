@@ -1,6 +1,5 @@
 package com.example.cocoman.activity
 
-import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,6 +10,7 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.RadioButton
 import com.example.cocoman.R
+import com.example.cocoman.login.LoginActivity
 
 class RegisterActivity : AppCompatActivity() {
 

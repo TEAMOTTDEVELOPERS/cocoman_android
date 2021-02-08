@@ -5,12 +5,13 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".network.MasterApplication"
+        android:name=".MasterApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
 
 
@@ -47,11 +48,11 @@
                     android:scheme="kakaoe2aede34f771b87b113aabd6b0f9dd3c" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.InitialRatingActivity">
+        <activity android:name=".initrate.InitialRatingActivity">
 
         </activity>
         <activity android:name=".activity.RegisterActivity" />
-        <activity android:name=".activity.LoginActivity" >
+        <activity android:name=".login.LoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
