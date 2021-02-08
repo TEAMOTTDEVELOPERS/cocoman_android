@@ -130,6 +130,7 @@
             android:fontFamily="@font/notosansregular"
             android:textColor="@color/font_black"
             android:textSize="14dp"
+
             android:textStyle="normal"
             android:layout_marginLeft="6dp"/>
     </RadioGroup>

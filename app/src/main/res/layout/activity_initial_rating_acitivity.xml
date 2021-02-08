@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activity.TestActivity">
+    android:layout_height="match_parent">
 
     <com.scwang.wave.MultiWaveHeader
         android:id="@+id/waveHeader"
@@ -12,82 +11,102 @@
         android:layout_height="150dp"
         android:elevation="-1dp"
         android:scaleY="1"
+        app:mwhVelocity="5"
+        app:mwhProgress="1"
+        app:mwhGradientAngle="95"
+        app:mwhWaveHeight="40dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:mwhCloseColor="@color/colorPrimary"
-        app:mwhStartColor="@color/colorAccent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
+
+        app:mwhStartColor="@color/colorAccent" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <Button
             android:id="@+id/ok_rating"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:text="완료"
-            android:textColor="@color/white"
+            android:layout_marginLeft="350dp"
             android:background="#00ff0000"
-            android:layout_marginLeft="350dp"/>
+            android:text="완료"
+            android:textColor="@color/white" />
+
         <LinearLayout
             android:id="@+id/rating_intro_ment"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:gravity="center_vertical"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/rating_userNickName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="채원 "
-                    android:textSize="15dp"
-                    android:textStyle="bold"
                     android:textColor="@color/white"
-                    />
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="님에 대해 더 알고 싶어요."
-                    android:textSize="15dp"
-                    android:textStyle="bold"
                     android:textColor="@color/white"
-                    />
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
             </LinearLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="10개 이상의 콘텐츠를 평가해주세요!"
-                android:textSize="15dp"
-                android:textStyle="bold"
-                android:textColor="@color/white"
                 android:layout_gravity="center_horizontal"
-                />
+                android:text="10개 이상의 콘텐츠를 평가해주세요!"
+                android:textColor="@color/white"
+                android:textSize="15dp"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
-        app:layout_constraintTop_toBottomOf="@+id/waveHeader"
-        app:layout_constraintBottom_toTopOf="@+id/progress_bar_layout"
         android:id="@+id/content_recylerview"
-        android:layout_width="400dp"
-        android:layout_height="600dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:nestedScrollingEnabled="false"
-        android:orientation="vertical" />
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/waveHeader" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        >
+        app:layout_constraintBottom_toBottomOf="parent">
+
         <RelativeLayout
             android:id="@+id/progress_bar_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
             <ProgressBar
                 android:id="@+id/progress_bar_rating"
                 style="@android:style/Widget.ProgressBar.Horizontal"
@@ -99,17 +118,18 @@
                 android:progress="0"
                 android:progressBackgroundTintMode="src_over"
                 android:progressTint="@color/colorAccent"
-                android:visibility="visible"/>
+                android:visibility="visible" />
+
             <TextView
                 android:id="@+id/progress_bar_count"
-                android:padding="2dp"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:textColor="@color/white"
+                android:padding="2dp"
                 android:text="10개 남음"
+                android:textColor="@color/white"
                 android:textSize="13dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
         </RelativeLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
