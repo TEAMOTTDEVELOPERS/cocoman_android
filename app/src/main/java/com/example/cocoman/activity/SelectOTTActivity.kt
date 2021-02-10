@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.cocoman.R
 import com.example.cocoman.data.Register
+import com.example.cocoman.login.LoginActivity
 
 class SelectOTTActivity : AppCompatActivity() {
     lateinit var netflixBtn:TextView
