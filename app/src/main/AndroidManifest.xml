@@ -50,7 +50,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".initrate.InitialRatingActivity">
-
         </activity>
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".login.LoginActivity" >

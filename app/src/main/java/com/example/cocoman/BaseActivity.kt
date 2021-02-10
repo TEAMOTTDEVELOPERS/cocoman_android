@@ -31,4 +31,5 @@ abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
     override fun makeToast(message: String?) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
+
 }
