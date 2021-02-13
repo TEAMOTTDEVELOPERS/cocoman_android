@@ -70,7 +70,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="10dp"
         android:inputType="textPassword"
         android:hint="비밀번호 설정"
         android:fontFamily="@font/notosansregular"
@@ -96,7 +96,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="10dp"
         android:hint="비밀번호 확인"
         android:fontFamily="@font/notosansregular"
         android:inputType="textPassword"
@@ -125,7 +125,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginTop="8dp"
         android:layout_marginLeft="26dp"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ageAndGender"

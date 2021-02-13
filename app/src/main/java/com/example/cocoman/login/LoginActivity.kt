@@ -8,6 +8,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.core.widget.doAfterTextChanged
 import com.example.cocoman.BaseActivity
 import com.example.cocoman.R
 import com.example.cocoman.activity.RegisterActivity
@@ -95,25 +96,26 @@ class LoginActivity : BaseActivity(), LoginContract.View {
     }
 
     private fun setupListener(){
-        loginBtn.apply {
-            setOnClickListener {
+        loginBtn.setOnClickListener {
                 presenter.tryLogin(
                     userId.text.toString(),
                     userPw.text.toString()
                 )
-            }
         }
 
-        registerBtn.apply {
-            setOnClickListener { navigateWithFinish(RegisterActivity::class) }
+
+        registerBtn.setOnClickListener {
+            navigateWithFinish(RegisterActivity::class)
         }
 
-        kakaoBtn.apply {
-            setOnClickListener { presenter.tryKakaoLogin(this@LoginActivity) }
+        kakaoBtn.setOnClickListener {
+            presenter.tryKakaoLogin(this@LoginActivity)
         }
-        googleBtn.apply {
-            setOnClickListener { presenter.tryGoogleLoginInit(this@LoginActivity) }
+
+        googleBtn.setOnClickListener {
+            presenter.tryGoogleLoginInit(this@LoginActivity)
         }
+
         facebookBtn.apply{
             facebookBtn.setReadPermissions("email","public_profile")
             setOnClickListener {
@@ -122,105 +124,71 @@ class LoginActivity : BaseActivity(), LoginContract.View {
                     facebookBtn)
             }
         }
-        findIDBtn.apply {
+        findIDBtn.setOnClickListener{
 
         }
-        findPwBtn.apply {
-
-        }
-        deleteIDBtn.apply {
-
-        }
-        deletePwBtn.apply {
+        findPwBtn.setOnClickListener{
 
         }
         // 사람 이미지 바꾸기
         userId.setOnFocusChangeListener{ _, hasFocus ->
-                if (hasFocus)
-                    personIcon.setImageResource(R.drawable.insertidaf)
-                else
-                    personIcon.setImageResource(R.drawable.insertidbf)
-            }
+            if (hasFocus)
+                personIcon.setImageResource(R.drawable.insertidaf)
+            else
+                personIcon.setImageResource(R.drawable.insertidbf)
+        }
 
         userPw.setOnFocusChangeListener { _, hasFocus ->
-                if (hasFocus)
-                // TODO: 비번으로 왔으면 자동으로 위에 적은 아이디가 어플에 등록되어있는지 check!
-                    lockIcon.setImageResource(R.drawable.insertpwaf)
-                else
-                    lockIcon.setImageResource(R.drawable.insertpwbf)
-            }
+            if (hasFocus)
+            // TODO: 비번으로 왔으면 자동으로 위에 적은 아이디가 어플에 등록되어있는지 check!
+                lockIcon.setImageResource(R.drawable.insertpwaf)
+            else
+                lockIcon.setImageResource(R.drawable.insertpwbf)
+        }
 
         //edittext 필드에 text 있으면 x 버튼 표시, 없으면 x 버튼도 없애기
         showDeleteButton(userPw,deletePwBtn)
         showDeleteButton(userId,deleteIDBtn)
-        deletePwBtn.apply {
-            setOnClickListener {
-                userPw.setText("")
-            }
+        deletePwBtn.setOnClickListener {
+            userPw.setText("")
         }
-        deleteIDBtn.apply {
-            setOnClickListener {
+
+        deleteIDBtn.setOnClickListener {
                 userId.setText("")
+        }
+
+
+        saveIdBtn.setOnClickListener {
+            // 원래 체크 되어있었는데 한번더 누름 --> uncheck
+            if (rememberChecked == 2) {
+                rememberChecked = 0
+                changeRadioStatus(rememberChecked)
+            } else {
+                rememberChecked = 2
+                changeRadioStatus(rememberChecked)
+            }
+        }
+        autoLoginBtn.setOnClickListener {
+            // 원래 체크 되어있었는데 한번더 누름 --> uncheck
+            if(rememberChecked == 1){
+                rememberChecked = 0
+                changeRadioStatus(rememberChecked)
+            }else{
+                rememberChecked = 1
+                changeRadioStatus(rememberChecked)
             }
         }
 
-        saveIdBtn.apply{
-            setOnClickListener {
-                // 원래 체크 되어있었는데 한번더 누름 --> uncheck
-                if(rememberChecked == 2){
-                    rememberChecked = 0
-                    changeRadioStatus(rememberChecked)
-                }else{
-                    rememberChecked = 2
-                    changeRadioStatus(rememberChecked)
-                }
-            }
-            autoLoginBtn.apply{
-                setOnClickListener {
-                    // 원래 체크 되어있었는데 한번더 누름 --> uncheck
-                    if(rememberChecked == 1){
-                        rememberChecked = 0
-                        changeRadioStatus(rememberChecked)
-                    }else{
-                        rememberChecked = 1
-                        changeRadioStatus(rememberChecked)
-                    }
-                }
-            }
-        }
     }
-    private fun showDeleteButton(editText: EditText,imageView: ImageView){
-        editText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                if (s != null) {
-                    if(s.isNotEmpty()){
-                        imageView.visibility = View.VISIBLE
-                    }else{
-                        imageView.visibility = View.GONE
-                    }
-                }
+    private fun showDeleteButton(editText: EditText,imageView: ImageView) {
+        editText.doAfterTextChanged { s ->
+            if (s.isNullOrEmpty()) {
+                imageView.visibility = View.GONE
+            } else {
+                imageView.visibility = View.VISIBLE
             }
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                if (s != null) {
-                    if(s.isNotEmpty()){
-                        imageView.visibility = View.VISIBLE
-                    }else{
-                        imageView.visibility = View.GONE
-                    }
-                }
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s != null) {
-                    if(s.isNotEmpty()){
-                        imageView.visibility = View.VISIBLE
-                    }else{
-                        imageView.visibility = View.GONE
-                    }
-                }
-            }
-        })
+        }
     }
 
     //자동 로그인 & 아이디 저장 라디오버튼 check or uncheck 해주는 함수
@@ -251,38 +219,15 @@ class LoginActivity : BaseActivity(), LoginContract.View {
         changedError(editText)
     }
     private fun changedError(editText: EditText){
-        editText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                if (s != null) {
-                    if(s.isNotEmpty()){
-                        errorMsg.visibility = View.GONE
-                        editText.setBackgroundResource(R.drawable.gray_edittext_selector)
-                    }else{
+        editText.doAfterTextChanged { s->
+            if(s.isNullOrEmpty()){
 
-                    }
-                }
             }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                if (s != null) {
-                    if(s.isNotEmpty()){
-
-                    }else{
-
-                    }
-                }
+            else{
+                errorMsg.visibility = View.GONE
+                editText.setBackgroundResource(R.drawable.gray_edittext_selector)
             }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s != null) {
-                    if(s.isNotEmpty()){
-                        errorMsg.visibility = View.GONE
-                        editText.setBackgroundResource(R.drawable.gray_edittext_selector)
-                    }else{
-                    }
-                }
-            }
-        })
+        }
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 //        callbackManager.onActivityResult(requestCode,resultCode,data)

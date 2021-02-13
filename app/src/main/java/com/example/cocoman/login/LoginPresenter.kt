@@ -49,6 +49,21 @@ class LoginPresenter @Inject constructor(
     lateinit var mOAuthLoginModule : OAuthLogin
     lateinit var  mOAuthLoginHandler: OAuthLoginHandler
 
+    private fun checkServerResponse(response:String){
+        if(response.substring(46,49)=="500"){
+            view.makeToast("500 internal server error")
+            Log.e("coconut", "500:"+response.substring(46,49))
+        }
+        else if(response.substring(46,49)=="400"){
+            view.makeToast("아이디와 비번을 다시 확인해주세요!")
+            Log.e("coconut", "400:"+response.substring(46,49))
+        }
+        else{
+            view.makeToast(response)
+        }
+
+    }
+
     override fun tryLogin(email: String, password: String) {
         userApi.login(LoginRequest("coconut", email, password, null))
             .subscribeOn(Schedulers.computation())
@@ -60,20 +75,8 @@ class LoginPresenter @Inject constructor(
             }, { err ->
                 run {
                     val errorMsg=err.toString()
+                    checkServerResponse(errorMsg)
                     view.loginErrorOccurred()
-                    Log.e("coconut", err.toString())
-                    if(errorMsg.substring(46,49)=="500"){
-                        view.makeToast("500 internal server error")
-                        Log.e("coconut", "500:"+errorMsg.substring(46,49))
-                    }
-                    else if(errorMsg.substring(46,49)=="500"){
-                        view.makeToast("아이디와 비번을 다시 확인해주세요!")
-                        Log.e("coconut", "400:"+errorMsg.substring(46,49))
-                    }
-                    else{view.makeToast(err.message)
-                        Log.e("coconut", "400:"+errorMsg)
-                        Log.e("coconut", "400:"+errorMsg.substring(5,7))
-                    }
                 }
             })
             .apply { compositeDisposable.add(this) }
@@ -126,18 +129,7 @@ class LoginPresenter @Inject constructor(
                     }, { err ->
                         run {
                             val errorMsg=err.toString()
-                            Log.e("coconut", err.toString())
-                            if(errorMsg.substring(46,49)=="500"){
-                                view.makeToast("500 internal server error")
-                                Log.e("coconut", "500:"+errorMsg.substring(46,49))
-                            }
-                            else if(errorMsg.substring(46,49)=="400"){
-                                // 400 이면 해당 아이디 & 비번 가진 유저 없다는 뜻 --> 소셜 회원가입으로!
-                                view.navigateWithFinish(RegisterActivity::class)
-                            }
-                            else{view.makeToast(err.message)
-                                Log.e("coconut", errorMsg)
-                            }
+                            checkServerResponse(errorMsg)
                         }
                     })
                     .apply { compositeDisposable.add(this) }
@@ -162,19 +154,7 @@ class LoginPresenter @Inject constructor(
             }, { err ->
                 run {
                     val errorMsg=err.toString()
-                    Log.e("coconut", err.toString())
-                    if(errorMsg.substring(46,49)=="500"){
-                        view.makeToast("500 internal server error")
-                        Log.e("coconut", "500:"+errorMsg.substring(46,49))
-                    }
-                    else if(errorMsg.substring(46,49)=="500"){
-                        view.makeToast("아이디와 비번을 다시 확인해주세요!")
-                        Log.e("coconut", "400:"+errorMsg.substring(46,49))
-                    }
-                    else{view.makeToast(err.message)
-                        Log.e("coconut", "400:"+errorMsg)
-                        Log.e("coconut", "400:"+errorMsg.substring(5,7))
-                    }
+                    checkServerResponse(errorMsg)
                 }
             })
             .apply { compositeDisposable.add(this) }
@@ -255,19 +235,7 @@ class LoginPresenter @Inject constructor(
             }, { err ->
                 run {
                     val errorMsg=err.toString()
-                    Log.e("coconut", err.toString())
-                    if(errorMsg.substring(46,49)=="500"){
-                        view.makeToast("500 internal server error")
-                        Log.e("coconut", "500:"+errorMsg.substring(46,49))
-                    }
-                    else if(errorMsg.substring(46,49)=="500"){
-                        view.makeToast("아이디와 비번을 다시 확인해주세요!")
-                        Log.e("coconut", "400:"+errorMsg.substring(46,49))
-                    }
-                    else{view.makeToast(err.message)
-                        Log.e("coconut", "400:"+errorMsg)
-                        Log.e("coconut", "400:"+errorMsg.substring(5,7))
-                    }
+                    checkServerResponse(errorMsg)
                 }
             })
             .apply { compositeDisposable.add(this) }
@@ -281,6 +249,8 @@ class LoginPresenter @Inject constructor(
     override fun detach() {
         compositeDisposable.clear()
     }
+
+
 
 //    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 //        callbackManager.onActivityResult(requestCode,resultCode,data)
