@@ -60,6 +60,9 @@ dependencies {
 
     implementation deps.hilt.hilt_android
 
+    implementation deps.room.runtime
+    implementation deps.room.ktx
+
     //Android Testing Support Library
     androidTestImplementation deps.atsl.ext_junit
     androidTestImplementation deps.espresso.core
@@ -68,6 +71,7 @@ dependencies {
     // kotlin annotation processing tool
 //    kapt deps.glide.compiler
     kapt deps.hilt.compiler
+    kapt deps.room.compiler
 
     //************************ legacy ************************
     //TODO :: version에 통합관리 및 필요한 dependency인지 체크 필요
