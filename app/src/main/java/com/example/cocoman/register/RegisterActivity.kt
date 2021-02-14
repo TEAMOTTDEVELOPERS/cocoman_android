@@ -1,0 +1,236 @@
+package com.example.cocoman.register
+
+import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.core.widget.doAfterTextChanged
+import com.example.cocoman.BaseActivity
+import com.example.cocoman.R
+import com.example.cocoman.activity.MainActivity
+import com.example.cocoman.login.LoginActivity
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+
+@AndroidEntryPoint
+class RegisterActivity :BaseActivity(),RegisterContract.View{
+    @Inject
+    lateinit var presenter: RegisterContract.Presenter
+    private lateinit var genderFemale : ImageView
+    private lateinit var genderMale: ImageView
+    private lateinit var genderEtc: ImageView
+    lateinit var errorMentView: TextView
+    lateinit var errorMentContractView: TextView
+    lateinit var usernameView: EditText
+    lateinit var userPasswordView: EditText
+    lateinit var userPasswordCheckView: EditText
+    lateinit var userAge: EditText
+    lateinit var deleteUsernameBtn: ImageView
+    lateinit var deletePasswordBtn: ImageView
+    lateinit var deletePasswordCheckBtn: ImageView
+    lateinit var nextBtn : Button
+    lateinit var goBackBtn: ImageView
+    // genderChecked --> 0 = none, 1 = male, 2 = female, 3 = etc
+    var genderChecked:Int = 0
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_register)
+        initView()
+        setupListener()
+    }
+
+    fun setupListener(){
+        nextBtn.setOnClickListener {
+            presenter.trySignUp(usernameView.text.toString(),userPasswordView.text.toString(),userPasswordCheckView.text.toString(),userAge.text.toString(),getUserGender())
+        }
+        showDeleteButton(usernameView,deleteUsernameBtn)
+        showDeleteButton(userPasswordView,deletePasswordBtn)
+        showDeleteButton(userPasswordCheckView,deletePasswordCheckBtn)
+        deleteUsernameBtn.setOnClickListener {
+            usernameView.setText("")
+        }
+        deletePasswordBtn.setOnClickListener {
+            userPasswordView.setText("")
+        }
+        deletePasswordCheckBtn.setOnClickListener {
+            userPasswordCheckView.setText("")
+        }
+        genderMale.setOnClickListener {
+            // 원래 체크 되어있었는데 한번더 누름 --> uncheck
+            if(genderChecked == 1){
+                genderChecked = 0
+                changeRadioStatus(genderChecked)
+            }else{
+                genderChecked = 1
+                changeRadioStatus(genderChecked)
+                errorMentView.visibility = View.GONE
+            }
+        }
+        genderFemale.setOnClickListener {
+            // 원래 체크 되어있었는데 한번더 누름 --> uncheck
+            if(genderChecked == 2){
+                genderChecked = 0
+                changeRadioStatus(genderChecked)
+            }else{
+                genderChecked = 2
+                changeRadioStatus(genderChecked)
+                errorMentView.visibility = View.GONE
+            }
+        }
+        genderEtc.setOnClickListener {
+            // 원래 체크 되어있었는데 한번더 누름 --> uncheck
+            if(genderChecked == 3){
+                genderChecked = 0
+                changeRadioStatus(genderChecked)
+            }else{
+                genderChecked = 3
+                changeRadioStatus(genderChecked)
+                errorMentView.visibility = View.GONE
+            }
+        }
+        goBackBtn.setOnClickListener {
+            navigateWithFinish(LoginActivity::class)
+        }
+    }
+
+    fun initView(){
+        usernameView = findViewById(R.id.insert_id_register)
+        userPasswordView = findViewById(R.id.insert_pw_register)
+        userPasswordCheckView = findViewById(R.id.insert_rePw_register)
+        userAge = findViewById(R.id.insert_age_register)
+        nextBtn = findViewById(R.id.nextBtn_register)
+        genderFemale = findViewById(R.id.genderBtn_female_register)
+        genderMale = findViewById(R.id.genderBtn_male_register)
+        genderEtc  = findViewById(R.id.genderBtn_etc_register)
+        errorMentView = findViewById(R.id.error_msg_inputfield_register)
+        errorMentContractView = findViewById(R.id.error_msg_contract_register)
+        deleteUsernameBtn = findViewById(R.id.delete_id_register)
+        deletePasswordBtn = findViewById(R.id.delete_pw_register)
+        deletePasswordCheckBtn = findViewById(R.id.delete_rePw_register)
+        goBackBtn=findViewById(R.id.gobackBtn_register)
+        presenter.attach(this)
+    }
+
+    fun errorOccuredEditTextChangeUI(editText: EditText){
+        editText.setBackgroundResource(R.drawable.red_edittext)
+        changedError(editText)
+    }
+    fun errorOccuredEditTextChangeUI(editText1: EditText,editText2: EditText){
+        editText1.setBackgroundResource(R.drawable.red_edittext)
+        editText2.setBackgroundResource(R.drawable.red_edittext)
+        changedError(editText1,editText2)
+        changedError(editText2,editText1)
+    }
+
+    private fun showDeleteButton(editText: EditText,imageView: ImageView){
+        editText.doAfterTextChanged { s->
+            if(s.isNullOrEmpty()){
+                imageView.visibility = View.GONE
+            }else{
+                imageView.visibility = View.VISIBLE
+            }
+        }
+    }
+    private fun changedError(editText: EditText){
+        editText.doAfterTextChanged { s->
+            if(s.isNullOrEmpty()){
+
+            }else{
+                errorMentView.visibility = View.GONE
+                editText.setBackgroundResource(R.drawable.gray_edittext_selector)
+            }
+        }
+    }
+
+    private fun changedError(editText1: EditText,editText2: EditText){
+        editText1.doAfterTextChanged { s->
+            if(s.isNullOrEmpty()){
+
+            }else{
+                errorMentView.visibility = View.GONE
+                editText1.setBackgroundResource(R.drawable.gray_edittext_selector)
+                editText2.setBackgroundResource(R.drawable.gray_edittext_selector)
+            }
+        }
+    }
+    private fun changeRadioStatus(genderChecked:Int){
+        when(genderChecked){
+            0->{
+                genderFemale.setImageResource(R.drawable.checkboxempty)
+                genderMale.setImageResource(R.drawable.checkboxempty)
+                genderEtc.setImageResource(R.drawable.checkboxempty)
+            }
+            1->{
+                genderFemale.setImageResource(R.drawable.checkboxempty)
+                genderMale.setImageResource(R.drawable.checkboxchecked)
+                genderEtc.setImageResource(R.drawable.checkboxempty)
+            }
+            2->{
+                genderMale.setImageResource(R.drawable.checkboxempty)
+                genderFemale.setImageResource(R.drawable.checkboxchecked)
+                genderEtc.setImageResource(R.drawable.checkboxempty)
+            }
+            3->{
+                genderMale.setImageResource(R.drawable.checkboxempty)
+                genderFemale.setImageResource(R.drawable.checkboxempty)
+                genderEtc.setImageResource(R.drawable.checkboxchecked)
+            }
+        }
+    }
+    private fun getUserGender():String{
+        var genderString=""
+        when(genderChecked){
+            0 -> {
+                genderString= "none"
+            }
+            1->{
+                genderString= "male"
+            }
+            2 ->{
+                genderString= "female"
+            }
+            3->{
+                genderString= "etc"
+            }
+        }
+        return genderString
+    }
+
+    override fun errorInInfo(errorField: String) {
+        makeToast("error is "+errorField)
+        errorMentView.visibility = View.VISIBLE
+        when(errorField){
+            "username"->{
+                makeToast("msg: "+errorField)
+                errorMentView.setText("이미 계정이 있는 이메일 주소입니다")
+                errorOccuredEditTextChangeUI(usernameView)
+            }
+            "password not inserted"->{
+                Log.d("msg",""+"password not inserted")
+                errorMentView.setText("비밀번호를 입력해주세요")
+                errorOccuredEditTextChangeUI(userPasswordCheckView,userPasswordView)
+            }
+            "password not same"->{
+                Log.d("msg",""+"password not same")
+                errorMentView.setText("비밀번호가 일치하지 않습니다")
+                errorOccuredEditTextChangeUI(userPasswordCheckView,userPasswordView)
+            }
+            "userAge"->{
+                errorMentView.setText("나이를 입력해주세요")
+                errorOccuredEditTextChangeUI(userAge)
+            }
+            "userGender"->{
+                errorMentView.setText("성별을 선택해주세요")
+            }
+        }
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.detach()
+    }
+
+}

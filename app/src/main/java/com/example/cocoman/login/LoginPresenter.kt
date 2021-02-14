@@ -6,12 +6,12 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.example.cocoman.R
-import com.example.cocoman.activity.RegisterActivity
 import com.example.cocoman.activity.RegisterForSocialLoginActivity
 import com.example.cocoman.data.MyInfo
 import com.example.cocoman.data.source.UserApi
 import com.example.cocoman.data.source.request.LoginRequest
 import com.example.cocoman.initrate.InitialRatingActivity
+import com.example.cocoman.register.RegisterActivity
 import com.facebook.*
 import com.facebook.FacebookSdk.getApplicationContext
 import com.facebook.appevents.AppEventsLogger

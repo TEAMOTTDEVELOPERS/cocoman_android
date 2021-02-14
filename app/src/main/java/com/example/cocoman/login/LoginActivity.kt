@@ -11,9 +11,9 @@ import android.widget.*
 import androidx.core.widget.doAfterTextChanged
 import com.example.cocoman.BaseActivity
 import com.example.cocoman.R
-import com.example.cocoman.activity.RegisterActivity
 import com.example.cocoman.data.source.request.LoginRequest
 import com.example.cocoman.initrate.InitialRatingActivity
+import com.example.cocoman.register.RegisterActivity
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.login.LoginResult

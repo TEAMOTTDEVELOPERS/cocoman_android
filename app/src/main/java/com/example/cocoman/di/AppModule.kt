@@ -55,7 +55,7 @@ object AppModule {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-            .baseUrl("http://3.138.79.170:8080/api/v1/")
+            .baseUrl("http://52.78.172.28:8080/api/v1/")
             .client(okHttpClient)
             .build()
     }
