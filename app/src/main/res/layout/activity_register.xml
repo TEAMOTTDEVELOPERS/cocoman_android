@@ -125,7 +125,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginTop="8dp"
         android:layout_marginLeft="26dp"
-        android:visibility="visible"/>
+        android:visibility="gone"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ageAndGender"
