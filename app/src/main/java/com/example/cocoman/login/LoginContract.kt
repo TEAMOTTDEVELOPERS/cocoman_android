@@ -1,10 +1,9 @@
 package com.example.cocoman.login
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import com.example.cocoman.BaseContract
-import com.facebook.login.widget.LoginButton
-import com.nhn.android.naverlogin.OAuthLogin
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 
 class LoginContract {
@@ -15,9 +14,10 @@ class LoginContract {
     interface Presenter : BaseContract.Presenter<View> {
         fun tryLogin(email: String, password: String)
         fun tryKakaoLogin(context: Context)
-        fun tryGoogleLoginInit(context: Context)
-        fun tryNaverLogin(token:String)
-        fun tryFacebookLogin(context: Context,btn:LoginButton)
-        fun tryGoogleLogin(token:String)
+        fun tryNaverLogin(activity: Activity)
+        fun tryFacebookLogin(activity: Activity)
+        fun tryGoogleLogin(context: Context)
+        fun onGoogleLoginResult(data: Intent?)
+        fun processFacebookResult(requestCode: Int, resultCode: Int, data: Intent?)
     }
 }
