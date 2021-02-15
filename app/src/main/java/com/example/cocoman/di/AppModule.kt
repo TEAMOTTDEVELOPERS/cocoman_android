@@ -1,16 +1,10 @@
 package com.example.cocoman.di
 
-import com.example.cocoman.data.source.UserApi
-import com.example.cocoman.login.LoginContract
-import com.example.cocoman.login.LoginPresenter
 import com.facebook.stetho.okhttp3.StethoInterceptor
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
@@ -57,16 +51,6 @@ object AppModule {
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .baseUrl("http://52.78.172.28:8080/api/v1/")
             .client(okHttpClient)
-            .build()
-    }
-
-    @Singleton
-    @Provides
-    fun provideGoogleSignInOption(): GoogleSignInOptions {
-        return GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestServerAuthCode("753386993138-ipr91dqokq943jjmoa9jsdpaf0h1qrmu.apps.googleusercontent.com")
-            .requestIdToken("753386993138-ipr91dqokq943jjmoa9jsdpaf0h1qrmu.apps.googleusercontent.com")
-            .requestEmail()
             .build()
     }
 

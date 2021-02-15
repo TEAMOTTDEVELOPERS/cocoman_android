@@ -18,6 +18,7 @@ versions.espresso = "3.3.0"
 versions.atsl_junit = "1.1.2"
 versions.junit = "4.12"
 versions.hilt = "2.28-alpha"
+versions.room = "2.2.6"
 
 ext.versions = versions
 
@@ -74,6 +75,11 @@ hilt.compiler = "com.google.dagger:hilt-android-compiler:$versions.hilt"
 hilt.plugin = "com.google.dagger:hilt-android-gradle-plugin:$versions.hilt"
 deps.hilt = hilt
 
+def room = [:]
+room.runtime = "androidx.room:room-runtime:$versions.room"
+room.compiler = "androidx.room:room-compiler:$versions.room"
+room.ktx = "androidx.room:room-ktx:$versions.room"
+deps.room = room
 
 // etc
 deps.core_ktx = "androidx.core:core-ktx:$versions.core_ktx"
