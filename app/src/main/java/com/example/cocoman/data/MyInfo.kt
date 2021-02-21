@@ -5,6 +5,7 @@ import java.util.*
 data class MyInfo(
     var id: String,
     var userId: String,
+    var userNickname:String,
     var password: String,
     var authToken: String,
     var gender: String,

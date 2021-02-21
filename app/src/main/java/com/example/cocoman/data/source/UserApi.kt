@@ -9,9 +9,9 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface UserApi {
-    @POST("user/signUp")
+    @POST("users/signUp")
     fun register(@Body request: RegisterRequest): Single<MyInfo>
 
-    @POST("user/signIn")
+    @POST("token")
     fun login(@Body request: LoginRequest): Single<MyInfo>
 }

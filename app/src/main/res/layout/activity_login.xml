@@ -7,12 +7,12 @@
 
     <ImageView
         android:id="@+id/icon_login"
-        android:layout_width="104dp"
-        android:layout_height="104dp"
-        android:layout_marginTop="110dp"
-        android:background="@color/black"
+        android:layout_width="340dp"
+        android:layout_height="304dp"
+        android:translationX="-71dp"
+        android:translationY="-50dp"
+        android:background="@drawable/main_circle"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
@@ -20,7 +20,7 @@
         android:layout_width="0dp"
         android:layout_height="52dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="260dp"
+        android:layout_marginTop="68dp"
         android:layout_marginRight="24dp"
         android:background="@drawable/gray_edittext_selector"
         android:fontFamily="@font/notosansregular"
@@ -28,9 +28,10 @@
         android:paddingLeft="42dp"
         android:textSize="14dp"
         android:textStyle="normal"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/icon_login" />
 
     <ImageView
         android:id="@+id/insert_id_personicon"
@@ -59,11 +60,12 @@
         android:layout_width="0dp"
         android:layout_height="52dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginRight="24dp"
         android:background="@drawable/gray_edittext_selector"
         android:fontFamily="@font/notosansregular"
         android:hint="비밀번호"
+        android:inputType="textPassword"
         android:paddingLeft="42dp"
         android:textSize="14dp"
         android:textStyle="normal"
@@ -97,13 +99,14 @@
         android:id="@+id/error_msg_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:fontFamily="@font/notosansregular"
         android:text="비밀번호가 일치하지 않습니다."
         android:textColor="@color/wrongRed"
-        android:textSize="14dp"
+        android:textSize="12dp"
         android:visibility="gone"
-        app:layout_constraintLeft_toLeftOf="@id/insert_pw"
+        android:layout_marginRight="29dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/insert_pw" />
 
     <Button
@@ -111,7 +114,7 @@
         android:layout_width="0dp"
         android:layout_height="52dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="54dp"
         android:layout_marginRight="24dp"
         android:background="@drawable/login_btn_background"
         android:fontFamily="@font/notosansbold"
@@ -121,7 +124,7 @@
         android:textStyle="normal"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/insert_pw" />
+        app:layout_constraintTop_toBottomOf="@id/findPw_or_id" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/social_logins"
@@ -177,11 +180,11 @@
         android:id="@+id/findPw_or_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:orientation="horizontal"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="29dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/social_logins">
+        app:layout_constraintTop_toBottomOf="@id/error_msg_login">
 
         <TextView
             android:id="@+id/findComment"
@@ -193,32 +196,6 @@
             android:textSize="12dp"
             android:textStyle="normal"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/lost_id"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/lost_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/notosansregular"
-            android:text="ID찾기 "
-            android:textColor="@color/blue_lostIDPW"
-            android:textSize="12dp"
-            android:textStyle="normal"
-            app:layout_constraintLeft_toRightOf="@id/findComment"
-            app:layout_constraintRight_toLeftOf="@+id/or_login"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/or_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/notosansregular"
-            android:text="또는 "
-            android:textColor="@color/font_black"
-            android:textSize="12dp"
-            android:textStyle="normal"
-            app:layout_constraintLeft_toRightOf="@id/lost_id"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -230,7 +207,7 @@
             android:textColor="@color/blue_lostIDPW"
             android:textSize="12dp"
             android:textStyle="normal"
-            app:layout_constraintLeft_toRightOf="@id/or_login"
+            app:layout_constraintLeft_toRightOf="@id/findComment"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -238,7 +215,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="90dp"
-        android:layout_marginBottom="54dp"
+        android:layout_marginBottom="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
