@@ -1,12 +1,12 @@
 package com.example.cocoman.register
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
+import android.view.Window
+import android.widget.*
 import androidx.core.widget.doAfterTextChanged
 import com.example.cocoman.BaseActivity
 import com.example.cocoman.R
@@ -27,12 +27,15 @@ class RegisterActivity :BaseActivity(),RegisterContract.View{
     lateinit var usernameView: EditText
     lateinit var userPasswordView: EditText
     lateinit var userPasswordCheckView: EditText
-    lateinit var userAge: EditText
+    lateinit var userAgeBtn: Button
     lateinit var deleteUsernameBtn: ImageView
     lateinit var deletePasswordBtn: ImageView
     lateinit var deletePasswordCheckBtn: ImageView
     lateinit var nextBtn : Button
     lateinit var goBackBtn: ImageView
+    lateinit var dialog:AlertDialog
+    lateinit var userAge:NumberPicker
+    lateinit var userAgeInserted:String
     // genderChecked --> 0 = none, 1 = male, 2 = female, 3 = etc
     var genderChecked:Int = 0
 
@@ -45,7 +48,7 @@ class RegisterActivity :BaseActivity(),RegisterContract.View{
 
     fun setupListener(){
         nextBtn.setOnClickListener {
-            presenter.trySignUp(usernameView.text.toString(),userPasswordView.text.toString(),userPasswordCheckView.text.toString(),userAge.text.toString(),getUserGender())
+            presenter.trySignUp(usernameView.text.toString(),userPasswordView.text.toString(),userPasswordCheckView.text.toString(),userAgeInserted,getUserGender())
         }
         showDeleteButton(usernameView,deleteUsernameBtn)
         showDeleteButton(userPasswordView,deletePasswordBtn)
@@ -95,13 +98,42 @@ class RegisterActivity :BaseActivity(),RegisterContract.View{
         goBackBtn.setOnClickListener {
             navigateWithFinish(LoginActivity::class)
         }
+
+        userAgeBtn.setOnClickListener {
+            dialog = AlertDialog.Builder(this@RegisterActivity).create()
+            val edialog : LayoutInflater = LayoutInflater.from(this@RegisterActivity)
+            val mView: View = edialog.inflate(R.layout.dialog_age,null)
+            dialog.setView(mView)
+            dialog.setCancelable(false)
+            userAge = mView.findViewById(R.id.dialog_userage)
+            val dialogCancelBtn=mView.findViewById<Button>(R.id.dialog_cancel)
+            val dialogOkBtn = mView.findViewById<Button>(R.id.dialog_ok)
+            userAge.minValue=0
+            userAge.maxValue=100
+            dialogCancelBtn.setOnClickListener {
+                dialog.dismiss()
+            }
+            dialogOkBtn.setOnClickListener {
+                userAgeInserted = userAge.value.toString()
+                if(userAgeInserted==""){
+                    makeToast("나이를 선택해주세요")
+                }else{
+                    userAgeBtn.setText(userAgeInserted)
+                    dialog.dismiss()
+                }
+
+            }
+            dialog.show()
+        }
+
+
     }
 
     fun initView(){
         usernameView = findViewById(R.id.insert_id_register)
         userPasswordView = findViewById(R.id.insert_pw_register)
         userPasswordCheckView = findViewById(R.id.insert_rePw_register)
-        userAge = findViewById(R.id.insert_age_register)
+        userAgeBtn = findViewById(R.id.insert_age_register)
         nextBtn = findViewById(R.id.nextBtn_register)
         genderFemale = findViewById(R.id.genderBtn_female_register)
         genderMale = findViewById(R.id.genderBtn_male_register)
@@ -219,10 +251,10 @@ class RegisterActivity :BaseActivity(),RegisterContract.View{
                 errorMentView.setText("비밀번호가 일치하지 않습니다")
                 errorOccuredEditTextChangeUI(userPasswordCheckView,userPasswordView)
             }
-            "userAge"->{
-                errorMentView.setText("나이를 입력해주세요")
-                errorOccuredEditTextChangeUI(userAge)
-            }
+//            "userAge"->{
+//                errorMentView.setText("나이를 입력해주세요")
+//                errorOccuredEditTextChangeUI(userAge)
+//            }
             "userGender"->{
                 errorMentView.setText("성별을 선택해주세요")
             }

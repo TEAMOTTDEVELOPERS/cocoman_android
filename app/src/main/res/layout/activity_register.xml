@@ -138,17 +138,16 @@
         android:layout_marginRight="24dp"
         android:layout_marginTop="10dp"
         android:orientation="horizontal">
-        <EditText
+        <Button
             android:id="@+id/insert_age_register"
             android:layout_width="72dp"
             android:layout_height="52dp"
             android:background="@drawable/gray_edittext_selector"
+            android:text="나이"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:hint="나이"
-            android:fontFamily="@font/notosansregular"
-            android:textSize="14dp"
-            android:paddingLeft="23dp"/>
+            app:layout_constraintLeft_toLeftOf="parent"
+            />
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.core.widget.doAfterTextChanged
 import com.example.cocoman.BaseActivity
 import com.example.cocoman.R
-import com.example.cocoman.activity.RegisterActivity
+import com.example.cocoman.register.RegisterActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
