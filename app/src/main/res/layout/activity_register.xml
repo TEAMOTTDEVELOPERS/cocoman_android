@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/header_register"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:orientation="horizontal">
@@ -16,7 +16,7 @@
             android:layout_height="30dp"
             android:src="@drawable/gobackbtn"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="45dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/register_text"
             android:layout_marginLeft="15dp"/>
@@ -25,9 +25,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/gobackBtn_register"
             android:layout_marginLeft="6dp"
+            android:layout_marginTop="45dp"
             android:text="회원가입"
             android:fontFamily="@font/notosansregular"
             android:textStyle="normal"
@@ -44,11 +44,12 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
-        android:layout_marginTop="25dp"
-        android:hint="아이디 또는 이메일 설정"
+        android:layout_marginTop="20dp"
+        android:hint="이메일"
         android:fontFamily="@font/notosansregular"
         android:textSize="14dp"
         android:paddingLeft="23dp"/>
+
     <ImageView
         android:id="@+id/delete_id_register"
         android:layout_width="20dp"
@@ -59,13 +60,38 @@
         android:layout_marginTop="16dp"
         android:layout_marginRight="12dp"
         android:visibility="invisible"/>
+    <EditText
+        android:id="@+id/insert_nickname_register"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:background="@drawable/gray_edittext_selector"
+        app:layout_constraintTop_toBottomOf="@id/insert_id_register"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="10dp"
+        android:hint="닉네임"
+        android:fontFamily="@font/notosansregular"
+        android:textSize="14dp"
+        android:paddingLeft="23dp"/>
+    <ImageView
+        android:id="@+id/delete_nickname_register"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/deletebutton"
+        app:layout_constraintTop_toTopOf="@id/insert_nickname_register"
+        app:layout_constraintRight_toRightOf="@id/insert_nickname_register"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="12dp"
+        android:visibility="invisible"/>
 
     <EditText
         android:id="@+id/insert_pw_register"
         android:layout_width="0dp"
         android:layout_height="52dp"
         android:background="@drawable/gray_edittext_selector"
-        app:layout_constraintTop_toBottomOf="@id/insert_id_register"
+        app:layout_constraintTop_toBottomOf="@id/insert_nickname_register"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="24dp"

@@ -36,6 +36,8 @@ class RegisterActivity :BaseActivity(),RegisterContract.View{
     lateinit var dialog:AlertDialog
     lateinit var userAge:NumberPicker
     lateinit var userAgeInserted:String
+    lateinit var userNickName:EditText
+    lateinit var deleteNickNameBtn: ImageView
     // genderChecked --> 0 = none, 1 = male, 2 = female, 3 = etc
     var genderChecked:Int = 0
 
@@ -48,11 +50,12 @@ class RegisterActivity :BaseActivity(),RegisterContract.View{
 
     fun setupListener(){
         nextBtn.setOnClickListener {
-            presenter.trySignUp(usernameView.text.toString(),userPasswordView.text.toString(),userPasswordCheckView.text.toString(),userAgeInserted,getUserGender())
+            presenter.trySignUp(usernameView.text.toString(),userPasswordView.text.toString(),userPasswordCheckView.text.toString(),userAgeInserted,getUserGender(),userNickName.toString())
         }
         showDeleteButton(usernameView,deleteUsernameBtn)
         showDeleteButton(userPasswordView,deletePasswordBtn)
         showDeleteButton(userPasswordCheckView,deletePasswordCheckBtn)
+        showDeleteButton(userNickName,deleteNickNameBtn)
         deleteUsernameBtn.setOnClickListener {
             usernameView.setText("")
         }
@@ -61,6 +64,9 @@ class RegisterActivity :BaseActivity(),RegisterContract.View{
         }
         deletePasswordCheckBtn.setOnClickListener {
             userPasswordCheckView.setText("")
+        }
+        deleteNickNameBtn.setOnClickListener {
+            userNickName.setText("")
         }
         genderMale.setOnClickListener {
             // 원래 체크 되어있었는데 한번더 누름 --> uncheck
@@ -145,6 +151,8 @@ class RegisterActivity :BaseActivity(),RegisterContract.View{
         deletePasswordCheckBtn = findViewById(R.id.delete_rePw_register)
         goBackBtn=findViewById(R.id.gobackBtn_register)
         presenter.attach(this)
+        userNickName=findViewById(R.id.insert_nickname_register)
+        deleteNickNameBtn=findViewById(R.id.delete_nickname_register)
     }
 
     fun errorOccuredEditTextChangeUI(editText: EditText){
@@ -257,6 +265,9 @@ class RegisterActivity :BaseActivity(),RegisterContract.View{
 //            }
             "userGender"->{
                 errorMentView.setText("성별을 선택해주세요")
+            }
+            "userNickname"->{
+                errorMentView.setText("닉네임을 입력해주세요")
             }
         }
     }

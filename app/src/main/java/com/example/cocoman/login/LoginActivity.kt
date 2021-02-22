@@ -1,12 +1,17 @@
 package com.example.cocoman.login
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
+import androidx.core.view.marginTop
 import androidx.core.widget.doAfterTextChanged
 import com.example.cocoman.BaseActivity
 import com.example.cocoman.R
@@ -23,7 +28,6 @@ class LoginActivity : BaseActivity(), LoginContract.View {
     lateinit var loginBtn: Button
     lateinit var registerBtn: TextView
     lateinit var findPwBtn: TextView
-    lateinit var findIDBtn: TextView
     lateinit var deleteIDBtn: ImageView
     lateinit var deletePwBtn: ImageView
     lateinit var personIcon: ImageView
@@ -33,6 +37,7 @@ class LoginActivity : BaseActivity(), LoginContract.View {
     lateinit var googleBtn: ImageView
     lateinit var kakaoBtn: ImageView
     lateinit var naverBtn: ImageView
+    lateinit var findPwView:ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +52,6 @@ class LoginActivity : BaseActivity(), LoginContract.View {
         userPw = findViewById(R.id.insert_pw)
         loginBtn = findViewById(R.id.login_btn)
         registerBtn = findViewById(R.id.register_btn)
-        findIDBtn = findViewById(R.id.lost_id)
         findPwBtn = findViewById(R.id.lost_pw)
         deleteIDBtn = findViewById(R.id.delete_id_login)
         deletePwBtn = findViewById(R.id.delete_pw_login)
@@ -58,6 +62,7 @@ class LoginActivity : BaseActivity(), LoginContract.View {
         personIcon = findViewById(R.id.insert_id_personicon)
         lockIcon = findViewById(R.id.insert_pw_lockicon)
         errorMsg = findViewById(R.id.error_msg_login)
+        findPwView=findViewById(R.id.findPw_or_id)
     }
 
     private fun setupListener() {
@@ -72,7 +77,6 @@ class LoginActivity : BaseActivity(), LoginContract.View {
         googleBtn.setOnClickListener { presenter.tryGoogleLogin(this) }
         fbBtn.setOnClickListener { presenter.tryFacebookLogin(this) }
         naverBtn.setOnClickListener { presenter.tryNaverLogin(this) }
-        findIDBtn.setOnClickListener {}
         findPwBtn.setOnClickListener {}
 
         // 사람 이미지 바꾸기
@@ -113,6 +117,8 @@ class LoginActivity : BaseActivity(), LoginContract.View {
     override fun loginErrorOccurred() {
         errorOccuredEditTextChangeUI(userPw)
         errorMsg.visibility = View.VISIBLE
+        val params: ViewGroup.MarginLayoutParams = findPwView!!.layoutParams as ViewGroup.MarginLayoutParams
+        params.topMargin = 4
     }
 
     private fun errorOccuredEditTextChangeUI(editText: EditText) {
@@ -126,7 +132,7 @@ class LoginActivity : BaseActivity(), LoginContract.View {
 
             } else {
                 errorMsg.visibility = View.GONE
-                editText.setBackgroundResource(R.drawable.gray_edittext_selector)
+                editText.setCompoundDrawablesWithIntrinsicBounds(null, null, null, ContextCompat.getDrawable(this@LoginActivity,R.drawable.red_edittext))
             }
         }
     }

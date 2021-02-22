@@ -20,11 +20,11 @@ class RegisterPresenter @Inject constructor(
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
 
-    override fun trySignUp(username:String, userPassword:String, userPasswordCheck: String, userAge:String, userGender:String){
-        val resultOfCheckInfo = checkInfo(username,userPassword,userPasswordCheck,userAge,userGender)
+    override fun trySignUp(username:String, userPassword:String, userPasswordCheck: String, userAge:String, userGender:String,userNickname:String){
+        val resultOfCheckInfo = checkInfo(username,userPassword,userPasswordCheck,userAge,userGender,userNickname)
         if(resultOfCheckInfo == "complete") {
             view.makeToast("complete 부분 실행 중")
-            userApi.register(RegisterRequest("coconut", username, userPassword, "", userGender,""))
+            userApi.register(RegisterRequest("coconut", username, userPassword, userNickname, userGender,""))
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { view.startLoading() }
@@ -56,7 +56,7 @@ class RegisterPresenter @Inject constructor(
         //TODO: ID 중복 확인!
     }
 
-    private  fun checkInfo(username:String,userPassword: String,userPasswordCheck:String,userAge: String,userGender: String):String{
+    private  fun checkInfo(username:String,userPassword: String,userPasswordCheck:String,userAge: String,userGender: String,userNickname: String):String{
         if(checkDuplicateId(username)){
             return "username"
         }
@@ -71,6 +71,9 @@ class RegisterPresenter @Inject constructor(
         }
         if(userGender=="none"){
             return "userGender"
+        }
+        if(userNickname == ""){
+            return "userNickname"
         }
         else {
             return "complete"

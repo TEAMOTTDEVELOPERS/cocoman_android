@@ -8,7 +8,7 @@ class RegisterContract {
 
     }
     interface Presenter:BaseContract.Presenter<View>{
-        fun trySignUp(username:String, userPassword:String, userPasswordCheck:String, userAge:String, userGender:String)
+        fun trySignUp(username:String, userPassword:String, userPasswordCheck:String, userAge:String, userGender:String,userNickname:String)
 
     }
 }

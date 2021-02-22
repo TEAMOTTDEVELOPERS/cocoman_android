@@ -6,6 +6,7 @@
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="gray">#EDEDED</color>
+    <color name="edittext_gray">#999999</color>
     <color name ="background">#F8F8FA</color>
     <color name ="blue_lostIDPW">#0093FF</color>
     <color name ="font_gray">#767676</color>
