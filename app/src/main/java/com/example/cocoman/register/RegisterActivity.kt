@@ -1,12 +1,19 @@
 package com.example.cocoman.register
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.res.Resources
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
+import android.view.WindowManager
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.core.widget.doAfterTextChanged
 import com.example.cocoman.BaseActivity
 import com.example.cocoman.R
@@ -48,6 +55,8 @@ class RegisterActivity :BaseActivity(),RegisterContract.View{
         setupListener()
     }
 
+    @SuppressLint("ResourceAsColor")
+    @RequiresApi(Build.VERSION_CODES.Q)
     fun setupListener(){
         nextBtn.setOnClickListener {
             presenter.trySignUp(usernameView.text.toString(),userPasswordView.text.toString(),userPasswordCheckView.text.toString(),userAgeInserted,getUserGender(),userNickName.toString())
@@ -107,18 +116,24 @@ class RegisterActivity :BaseActivity(),RegisterContract.View{
 
         userAgeBtn.setOnClickListener {
             dialog = AlertDialog.Builder(this@RegisterActivity).create()
+            dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+
             val edialog : LayoutInflater = LayoutInflater.from(this@RegisterActivity)
             val mView: View = edialog.inflate(R.layout.dialog_age,null)
             dialog.setView(mView)
             dialog.setCancelable(false)
             userAge = mView.findViewById(R.id.dialog_userage)
-            val dialogCancelBtn=mView.findViewById<Button>(R.id.dialog_cancel)
+//            val dialogCancelBtn=mView.findViewById<Button>(R.id.dialog_cancel)
             val dialogOkBtn = mView.findViewById<Button>(R.id.dialog_ok)
             userAge.minValue=0
             userAge.maxValue=100
-            dialogCancelBtn.setOnClickListener {
-                dialog.dismiss()
-            }
+            setDividerColor(userAge, resources.getColor(R.color.white))
+
+
+//            dialogCancelBtn.setOnClickListener {
+//                dialog.dismiss()
+//            }
             dialogOkBtn.setOnClickListener {
                 userAgeInserted = userAge.value.toString()
                 if(userAgeInserted==""){
@@ -274,6 +289,31 @@ class RegisterActivity :BaseActivity(),RegisterContract.View{
     override fun onDestroy() {
         super.onDestroy()
         presenter.detach()
+    }
+    private fun setDividerColor(picker: NumberPicker, color: Int) //픽커 글자 컬러를 변경
+    {
+        val pickerFields = NumberPicker::class.java.declaredFields
+        for (pf in pickerFields) {
+            if (pf.name == "mSelectionDivider")
+            {
+                pf.isAccessible = true
+                try
+                {
+                    val colorDrawable = ColorDrawable(color)
+                    pf.set(picker, colorDrawable)
+                } catch (e: IllegalArgumentException)
+                {
+                    e.printStackTrace()
+                } catch (e: Resources.NotFoundException)
+                {
+                    e.printStackTrace()
+                } catch (e: IllegalAccessException)
+                {
+                    e.printStackTrace()
+                }
+                break
+            }
+        }
     }
 
 }

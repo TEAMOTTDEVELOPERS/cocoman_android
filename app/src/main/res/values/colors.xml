@@ -12,5 +12,6 @@
     <color name ="font_gray">#767676</color>
     <color name="font_black">#191919</color>
     <color name="wrongRed">#EB251D</color>
+    <color name="transparant">#00FFFFFF</color>
 
 </resources>
