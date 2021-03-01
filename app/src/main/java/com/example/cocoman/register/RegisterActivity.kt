@@ -48,6 +48,7 @@ class RegisterActivity :BaseActivity(),RegisterContract.View{
     // genderChecked --> 0 = none, 1 = male, 2 = female, 3 = etc
     var genderChecked:Int = 0
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -117,8 +118,6 @@ class RegisterActivity :BaseActivity(),RegisterContract.View{
         userAgeBtn.setOnClickListener {
             dialog = AlertDialog.Builder(this@RegisterActivity).create()
             dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-
             val edialog : LayoutInflater = LayoutInflater.from(this@RegisterActivity)
             val mView: View = edialog.inflate(R.layout.dialog_age,null)
             dialog.setView(mView)
@@ -140,6 +139,7 @@ class RegisterActivity :BaseActivity(),RegisterContract.View{
                     makeToast("나이를 선택해주세요")
                 }else{
                     userAgeBtn.setText(userAgeInserted)
+                    userAgeBtn.setTextColor(Color.BLACK)
                     dialog.dismiss()
                 }
 
