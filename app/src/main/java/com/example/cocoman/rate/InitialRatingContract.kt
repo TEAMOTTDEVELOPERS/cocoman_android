@@ -1,4 +1,4 @@
-package com.example.cocoman.initrate
+package com.example.cocoman.rate
 
 import com.example.cocoman.BaseContract
 import com.example.cocoman.data.ContentRating

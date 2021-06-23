@@ -1,23 +1,28 @@
-package com.example.cocoman.fragment
+package com.example.cocoman.rate
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.cocoman.BaseActivity
 import com.example.cocoman.R
+import com.example.cocoman.data.ContentRating
+import kotlin.reflect.KClass
 
-class OTTRecommendFragment : Fragment(){
+class RateContentFragment : Fragment(), InitialRatingContract.View{
     var userId: Int? = 1
 
     companion object {
 
         private const val USERID = "userId"
 
-        fun newInstance(userId: Int): OTTRecommendFragment {
+        fun newInstance(userId: Int): RateContentFragment {
             var bundle = Bundle()
             bundle.putInt(USERID, userId)
-            var fragment = OTTRecommendFragment()
+            var fragment = RateContentFragment()
             fragment.arguments = bundle
 
             return fragment
@@ -35,7 +40,8 @@ class OTTRecommendFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        userId = arguments?.getInt(OTTRecommendFragment.USERID) ?: 0
+        userId = arguments?.getInt(USERID) ?: 0
 
     }
+
 }

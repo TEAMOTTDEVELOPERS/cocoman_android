@@ -7,7 +7,7 @@ import android.util.Log
 import com.example.cocoman.R
 import com.example.cocoman.data.source.UserApi
 import com.example.cocoman.data.source.request.LoginRequest
-import com.example.cocoman.initrate.InitialRatingActivity
+import com.example.cocoman.rate.InitialRatingActivity
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback

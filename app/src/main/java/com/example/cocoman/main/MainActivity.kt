@@ -1,4 +1,4 @@
-package com.example.cocoman.activity
+package com.example.cocoman.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.RelativeLayout
 import androidx.viewpager.widget.ViewPager
 import com.example.cocoman.R
-import com.example.cocoman.adapter.NavigationTabAdapter
 import com.google.android.material.tabs.TabLayout
 
 class MainActivity : AppCompatActivity() {
@@ -24,7 +23,10 @@ class MainActivity : AppCompatActivity() {
 
     }
     private fun makeBottomNavigation(){
-        val pagerAdapter = NavigationTabAdapter(supportFragmentManager,5)
+        val pagerAdapter = NavigationTabAdapter(
+            supportFragmentManager,
+            5
+        )
         fragmentPage.adapter = pagerAdapter
         navBar.setupWithViewPager(fragmentPage)
 

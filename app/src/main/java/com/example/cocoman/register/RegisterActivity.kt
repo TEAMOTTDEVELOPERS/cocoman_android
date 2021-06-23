@@ -10,14 +10,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.Window
-import android.view.WindowManager
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.widget.doAfterTextChanged
 import com.example.cocoman.BaseActivity
 import com.example.cocoman.R
-import com.example.cocoman.activity.MainActivity
 import com.example.cocoman.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

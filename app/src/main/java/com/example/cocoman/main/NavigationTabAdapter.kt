@@ -1,9 +1,10 @@
-package com.example.cocoman.adapter
+package com.example.cocoman.main
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.example.cocoman.fragment.*
+import com.example.cocoman.rate.RateContentFragment
 
 
 class NavigationTabAdapter (fm:FragmentManager,val fragmentCount:Int): FragmentStatePagerAdapter(fm){
@@ -15,7 +16,7 @@ class NavigationTabAdapter (fm:FragmentManager,val fragmentCount:Int): FragmentS
         when(position){
             0 -> return HomeFragment()
             1 -> return SearchFragment()
-            2 -> return OTTRecommendFragment()
+            2 -> return RateContentFragment()
             3 -> return GroupFragment()
             else -> return MyProfileFragment()
         }

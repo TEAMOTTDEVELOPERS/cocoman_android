@@ -1,7 +1,6 @@
-package com.example.cocoman.initrate
+package com.example.cocoman.rate
 
 import android.util.Log
-import com.example.cocoman.activity.MainActivity
 import com.example.cocoman.data.ContentRating
 import com.example.cocoman.data.source.ContentsApi
 import com.example.cocoman.data.source.UserApi
