@@ -7,12 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.cocoman.BaseActivity
 import com.example.cocoman.R
-import com.example.cocoman.data.ContentRating
-import kotlin.reflect.KClass
 
-class RateContentFragment : Fragment(), InitialRatingContract.View{
+class RateContentFragment : Fragment(){
     var userId: Int? = 1
 
     companion object {
