@@ -49,19 +49,20 @@
                     android:scheme="kakaoe2aede34f771b87b113aabd6b0f9dd3c" />
             </intent-filter>
         </activity>
-        <activity android:name=".initrate.InitialRatingActivity">
+        <activity android:name=".rate.InitialRatingActivity">
         </activity>
         <activity android:name=".register.RegisterActivity">
         </activity>
         <activity android:name=".login.LoginActivity" >
+        </activity>
+        <activity android:name=".activity.SplashActivity" />
+        <activity android:name=".main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.SplashActivity" />
-        <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.RegisterForSocialLoginActivity" />
     </application>
 

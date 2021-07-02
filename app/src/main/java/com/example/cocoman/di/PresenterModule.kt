@@ -1,7 +1,7 @@
 package com.example.cocoman.di
 
-import com.example.cocoman.initrate.InitialRatingContract
-import com.example.cocoman.initrate.InitialRatingPresenter
+import com.example.cocoman.rate.InitialRatingContract
+import com.example.cocoman.rate.InitialRatingPresenter
 import com.example.cocoman.login.LoginContract
 import com.example.cocoman.login.LoginPresenter
 import com.example.cocoman.register.RegisterContract

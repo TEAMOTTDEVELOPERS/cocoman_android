@@ -1,13 +1,8 @@
 package com.example.cocoman.register
 
-import android.view.View
-import com.example.cocoman.activity.MainActivity
+import com.example.cocoman.main.MainActivity
 import com.example.cocoman.data.source.UserApi
-import com.example.cocoman.data.source.request.LoginRequest
 import com.example.cocoman.data.source.request.RegisterRequest
-import com.example.cocoman.initrate.InitialRatingActivity
-import com.example.cocoman.login.LoginActivity
-import com.example.cocoman.login.LoginContract
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers

@@ -1,6 +1,4 @@
-package com.example.cocoman.initrate
-
-import com.example.cocoman.data.ContentRating
+package com.example.cocoman.rate
 
 interface onContentRatingStatusChangeListener {
     fun onContentRated(position: Int, contentsId: String, score: Float)

@@ -11,7 +11,7 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import com.example.cocoman.R
-import com.example.cocoman.initrate.InitialRatingActivity
+import com.example.cocoman.rate.InitialRatingActivity
 
 class RegisterForSocialLoginActivity : AppCompatActivity() {
     lateinit var userAge: EditText

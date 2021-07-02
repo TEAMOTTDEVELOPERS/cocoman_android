@@ -1,4 +1,4 @@
-package com.example.cocoman.initrate
+package com.example.cocoman.rate
 
 import android.content.Context
 import android.util.Log

@@ -1,7 +1,6 @@
-package com.example.cocoman.initrate
+package com.example.cocoman.rate
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -10,8 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cocoman.BaseActivity
 import com.example.cocoman.R
 import com.example.cocoman.data.ContentRating
-import com.example.cocoman.data.Contents
-import com.example.cocoman.login.LoginContract
 import com.scwang.wave.MultiWaveHeader
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
